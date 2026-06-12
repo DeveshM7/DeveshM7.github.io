@@ -1,5 +1,5 @@
 import type { ComponentType, SVGProps } from "react"
-import { Code2, BrainCircuit, Layers, Wrench, Cpu, Mail, FileText } from "lucide-react"
+import { Mail, FileText } from "lucide-react"
 import { GithubIcon, LinkedinIcon } from "@/components/brand-icons"
 
 /** Any icon component that accepts standard SVG props (lucide or custom brand icons). */
@@ -35,7 +35,6 @@ export const contactLinks = {
 /* ------------------------------------------------------------------ */
 export const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
   { label: "Research", href: "#research" },
@@ -56,85 +55,6 @@ export const quickFacts: { label: string; value: string }[] = [
 /* ------------------------------------------------------------------ */
 /*  SKILLS                                                             */
 /* ------------------------------------------------------------------ */
-export type SkillCategory = {
-  title: string
-  icon: IconType
-  skills: string[]
-}
-
-export const skillCategories: SkillCategory[] = [
-  {
-    title: "Programming Languages",
-    icon: Code2,
-    skills: [
-      "Python",
-      "Java",
-      "C",
-      "C++",
-      "JavaScript",
-      "TypeScript",
-      "SQL",
-      "x86-64 Assembly",
-      "Lex/Yacc",
-      "YAML",
-    ],
-  },
-  {
-    title: "AI / ML",
-    icon: BrainCircuit,
-    skills: [
-      "LLM APIs",
-      "PyTorch",
-      "scikit-learn",
-      "RAG",
-      "FAISS",
-      "Embeddings",
-      "Prompt Engineering",
-      "Model Evaluation",
-    ],
-  },
-  {
-    title: "Frontend / Backend",
-    icon: Layers,
-    skills: [
-      "React",
-      "Next.js",
-      "Node.js",
-      "FastAPI",
-      "REST APIs",
-      "HTML/CSS",
-      "Responsive UI",
-    ],
-  },
-  {
-    title: "Tools & Infrastructure",
-    icon: Wrench,
-    skills: [
-      "Git",
-      "GitHub",
-      "GitLab",
-      "Docker",
-      "AWS",
-      "Linux",
-      "MySQL",
-      "PostgreSQL",
-      "MongoDB",
-    ],
-  },
-  {
-    title: "Embedded / Hardware",
-    icon: Cpu,
-    skills: [
-      "Verilog",
-      "FPGA",
-      "Zephyr RTOS",
-      "Renode",
-      "Microcontrollers",
-      "Computer Architecture",
-    ],
-  },
-]
-
 /* ------------------------------------------------------------------ */
 /*  EXPERIENCE                                                         */
 /* ------------------------------------------------------------------ */
