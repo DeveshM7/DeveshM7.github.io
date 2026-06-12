@@ -9,7 +9,7 @@ export function Skills() {
   const reduce = useReducedMotion()
 
   return (
-    <section id="skills" className="bg-[#eceff4] px-4 py-24 sm:px-6">
+    <section id="skills" className="bg-[#e6eaf0] px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Toolkit"
@@ -25,10 +25,10 @@ export function Skills() {
                 <motion.div
                   whileHover={reduce ? undefined : { y: -4 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="group h-full rounded-2xl border border-[#e5e7eb] bg-[#f6f8fb] p-6 transition-colors duration-300 hover:border-[#7dd3fc]/50 hover:bg-white hover:shadow-md"
+                  className="group h-full rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] p-6 transition-colors duration-300 hover:border-[#7dd3fc]/50 hover:bg-white hover:shadow-md"
                 >
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#e5e7eb] bg-[#f6f8fb] text-[#0b0d10] transition-all duration-300 group-hover:border-[#7dd3fc]/40 group-hover:text-[#0b0d10] group-hover:shadow-[0_0_16px_rgba(125,211,252,0.2)]">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#e5e7eb] bg-[#f1f4f8] text-[#0b0d10] transition-all duration-300 group-hover:border-[#7dd3fc]/40 group-hover:text-[#0b0d10] group-hover:shadow-[0_0_16px_rgba(125,211,252,0.2)]">
                       <Icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
                     </span>
                     <h3 className="text-base font-semibold text-[#111827]">{category.title}</h3>
@@ -37,7 +37,7 @@ export function Skills() {
                     {category.skills.map((skill) => (
                       <li
                         key={skill}
-                        className="rounded-full border border-[#e5e7eb] bg-[#f6f8fb] px-3 py-1 text-xs font-medium text-[#374151] transition-colors group-hover:border-[#e5e7eb]"
+                        className="rounded-full border border-[#e5e7eb] bg-[#f1f4f8] px-3 py-1 text-xs font-medium text-[#374151] transition-colors group-hover:border-[#e5e7eb]"
                       >
                         {skill}
                       </li>

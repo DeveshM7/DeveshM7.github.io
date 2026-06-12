@@ -3,12 +3,12 @@ import { quickFacts } from "@/lib/data"
 
 export function About() {
   return (
-    <section id="about" className="bg-[#eceff4] px-4 py-24 sm:px-6">
+    <section id="about" className="bg-[#e6eaf0] px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
           {/* Intro card */}
           <Reveal>
-            <div className="h-full rounded-2xl border border-[#e5e7eb] bg-[#f6f8fb] p-8 shadow-sm">
+            <div className="h-full rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] p-8 shadow-sm">
               <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#0b0d10]/50">
                 About
               </p>
@@ -32,7 +32,7 @@ export function About() {
           <div className="grid gap-4 sm:grid-cols-2">
             {quickFacts.map((fact, i) => (
               <Reveal key={fact.label} delay={i * 0.06}>
-                <div className="h-full rounded-2xl border border-[#e5e7eb] bg-[#f6f8fb] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#7dd3fc]/50 hover:shadow-md">
+                <div className="h-full rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#7dd3fc]/50 hover:shadow-md">
                   <p className="font-mono text-xs uppercase tracking-[0.15em] text-[#0b0d10]/40">
                     {fact.label}
                   </p>
