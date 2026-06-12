@@ -44,8 +44,8 @@ export function HeroBackground() {
       particles = Array.from({ length: density }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
       }))
 
       const glyphCount = Math.min(14, Math.floor(width / 90))
@@ -93,8 +93,8 @@ export function HeroBackground() {
         if (p.y < 0 || p.y > height) p.vy *= -1
 
         ctx.beginPath()
-        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2)
-        ctx.fillStyle = "rgba(174,182,194,0.45)"
+        ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2)
+        ctx.fillStyle = "rgba(174,182,194,0.65)"
         ctx.fill()
       }
 
@@ -108,12 +108,12 @@ export function HeroBackground() {
           const dy = a.y - b.y
           const dist = Math.hypot(dx, dy)
           if (dist < maxDist) {
-            const opacity = (1 - dist / maxDist) * 0.18
+            const opacity = (1 - dist / maxDist) * 0.3
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
             ctx.strokeStyle = `rgba(125,211,252,${opacity})`
-            ctx.lineWidth = 0.6
+            ctx.lineWidth = 0.9
             ctx.stroke()
           }
         }
