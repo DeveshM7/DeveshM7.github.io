@@ -1,6 +1,6 @@
 import type { ComponentType, SVGProps } from "react"
 import { Code2, BrainCircuit, Layers, Wrench, Cpu, Mail, FileText } from "lucide-react"
-import { GithubIcon, LinkedinIcon, InstagramIcon } from "@/components/brand-icons"
+import { GithubIcon, LinkedinIcon } from "@/components/brand-icons"
 
 /** Any icon component that accepts standard SVG props (lucide or custom brand icons). */
 type IconType = ComponentType<SVGProps<SVGSVGElement>>
@@ -15,23 +15,18 @@ export type SocialLink = {
 }
 
 export const socialLinks: SocialLink[] = [
-  // TODO: replace with your real GitHub URL
-  { label: "GitHub", href: "https://github.com", icon: GithubIcon },
-  // TODO: replace with your real LinkedIn URL
-  { label: "LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
-  // TODO: replace with your real email
-  { label: "Email", href: "mailto:devesh@example.com", icon: Mail },
-  // TODO: replace with your real Instagram URL
-  { label: "Instagram", href: "https://instagram.com", icon: InstagramIcon },
+  { label: "GitHub", href: "https://github.com/DeveshM7", icon: GithubIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/devesh-maheshwari", icon: LinkedinIcon },
+  { label: "Email", href: "mailto:deveshm95764@gmail.com", icon: Mail },
   // TODO: replace with your real resume link (e.g. /resume.pdf)
   { label: "Resume", href: "/resume.pdf", icon: FileText },
 ]
 
 /* Convenience direct references used in the contact section */
 export const contactLinks = {
-  email: "mailto:devesh@example.com", // TODO: replace
-  linkedin: "https://linkedin.com", // TODO: replace
-  github: "https://github.com", // TODO: replace
+  email: "mailto:deveshm95764@gmail.com",
+  linkedin: "https://www.linkedin.com/in/devesh-maheshwari",
+  github: "https://github.com/DeveshM7",
   resume: "/resume.pdf", // TODO: replace
 }
 
