@@ -12,7 +12,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Devesh Maheshwari — CS & EE @ Purdue',
   description:
-    'Portfolio of Devesh Maheshwari, a Purdue Computer Science & Electrical Engineering senior working across AI/ML, embedded systems, full-stack engineering, and research.',
+    'Portfolio of Devesh Maheshwari, a Purdue Computer Science & Electrical Engineering senior working across AI/ML, embedded systems, backend engineering, and research.',
   generator: 'v0.app',
   icons: {
     icon: [

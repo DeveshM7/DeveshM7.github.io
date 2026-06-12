@@ -71,7 +71,7 @@ export function Hero() {
           transition={{ duration: 0.6, delay: 0.28 }}
           className="mt-2 font-mono text-sm tracking-wide text-[#aeb6c2]"
         >
-          AI/ML • Embedded Systems • Full-Stack Engineering • Research
+          AI/ML • Embedded Systems • Backend Engineering • Research
         </motion.p>
 
         {/* Social row */}

@@ -15,7 +15,7 @@ export function Contact() {
             Let&apos;s connect.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-pretty leading-relaxed text-[#aeb6c2]">
-            Interested in AI, embedded systems, full-stack tools, or research collaboration?
+            Interested in AI, embedded systems, backend tools, or research collaboration?
             I&apos;d love to hear from you.
           </p>
         </Reveal>

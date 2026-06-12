@@ -14,7 +14,7 @@ export function Skills() {
         <SectionHeading
           eyebrow="Toolkit"
           title="Technical Skills"
-          description="A cross-disciplinary stack spanning languages, AI/ML, full-stack engineering, infrastructure, and hardware."
+          description="A cross-disciplinary stack spanning languages, AI/ML, backend engineering, infrastructure, and hardware."
         />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

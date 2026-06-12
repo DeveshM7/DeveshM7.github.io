@@ -16,8 +16,8 @@ export function About() {
                 Engineering across software, AI, and silicon.
               </h2>
               <p className="mt-5 leading-relaxed text-[#6b7280]">
-                I build intelligent systems that span the full stack — from LLM-powered workflows
-                and full-stack applications down to compilers, FPGA designs, and embedded firmware.
+                I build intelligent systems across the backend — from LLM-powered workflows
+                and backend services and APIs down to compilers, FPGA designs, and embedded firmware.
                 I&apos;m drawn to problems where rigorous engineering meets real-world impact.
               </p>
               <p className="mt-4 leading-relaxed text-[#6b7280]">
