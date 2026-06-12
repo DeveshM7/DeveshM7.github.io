@@ -98,19 +98,6 @@ export function Hero() {
             )
           })}
         </motion.div>
-
-        {/* Intro paragraph */}
-        <motion.p
-          initial={{ opacity: 0, y: reduce ? 0 : 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.44 }}
-          className="mt-8 max-w-2xl text-pretty leading-relaxed text-[#aeb6c2]"
-        >
-          I&apos;m a Purdue senior pursuing Computer Science and Electrical Engineering, interested
-          in building intelligent systems across software, AI, and embedded platforms. My work spans
-          LLM workflows, full-stack tools, compiler systems, FPGA projects, computer vision, and
-          embedded AI research.
-        </motion.p>
       </div>
 
       {/* Scroll indicator */}
