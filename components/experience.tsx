@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { AnimatePresence, motion, useReducedMotion } from "motion/react"
 import { ChevronDown } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
@@ -33,9 +34,14 @@ export function Experience() {
                   <div className="relative flex gap-4 sm:gap-5">
                     {/* node + logo */}
                     <div className="relative z-10 flex-shrink-0">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-white/15 bg-[#111418] font-mono text-sm font-semibold text-[#7dd3fc] shadow-lg">
-                        {/* TODO: replace initials with a company logo image */}
-                        {exp.initials}
+                      <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-xl border border-white/15 bg-white shadow-lg">
+                        <Image
+                          src={exp.logo}
+                          alt={`${exp.company} logo`}
+                          width={56}
+                          height={56}
+                          className="h-full w-full object-contain p-1.5"
+                        />
                       </div>
                     </div>
 

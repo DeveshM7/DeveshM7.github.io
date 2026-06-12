@@ -148,6 +148,7 @@ export type Experience = {
   role: string
   date: string
   initials: string
+  logo: string
   bullets: string[]
 }
 
@@ -157,6 +158,7 @@ export const experiences: Experience[] = [
     role: "Platform / Software Engineering Intern",
     date: "Jun 2026 – Aug 2026",
     initials: "PAN",
+    logo: "/experiences/PAN_logo.jpeg",
     bullets: [
       "Building a usage tracker and visualizer for platform microservices and features.",
       "Designing a plug-and-play telemetry workflow so new services can be added to the tracking pipeline with minimal manual effort.",
@@ -168,6 +170,7 @@ export const experiences: Experience[] = [
     role: "AI / ML Intern",
     date: "Jun 2025 – Aug 2025",
     initials: "SX",
+    logo: "/experiences/StudioX.jpg",
     bullets: [
       "Automated DevOps and customer-support workflows with AI agents, improving internal efficiency and saving 5–8 hours weekly.",
       "Integrated GitLab, Docker APIs, and Claude via YAML-based CI/CD and user-management workflows.",
@@ -180,6 +183,7 @@ export const experiences: Experience[] = [
     role: "Applied AI Intern",
     date: "May 2024 – Jul 2024",
     initials: "SS",
+    logo: "/experiences/Sopra_Steria.png",
     bullets: [
       "Delivered RAG search over employee PDFs, reducing lookup time and generating grounded answers in under 5 seconds.",
       "Built an ingestion pipeline for parsing, chunking, embedding, and indexing PDF content with OpenAI and FAISS.",
@@ -191,21 +195,11 @@ export const experiences: Experience[] = [
     role: "AI Developer",
     date: "May 2023 – Jul 2023",
     initials: "BE",
+    logo: "/experiences/Bytedge-logo.png",
     bullets: [
       "Enabled natural language search on an internal company platform, reducing lookup time from minutes to under 10 seconds.",
       "Fine-tuned GPT-3 prompts for SQL generation tailored to company schema and complex menu-driven data.",
       "Built GPT-3 outputs into a summarization pipeline and presented results in natural language through a search interface.",
-    ],
-  },
-  {
-    company: "Equinox Solutions LLP",
-    role: "App Developer",
-    date: "May 2022 – Aug 2022",
-    initials: "EQ",
-    bullets: [
-      "Created SeedTrace Android app for supply-chain transparency in organic food.",
-      "Programmed QR-code scanning with ZXing to show farm origin, harvest date, warehouse location, and certifications.",
-      "Connected React Native frontend with REST APIs to deliver product data inside a mobile interface.",
     ],
   },
 ]

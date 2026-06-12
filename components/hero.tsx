@@ -27,7 +27,7 @@ export function Hero() {
       />
 
       <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center">
-        {/* Profile image — TODO: replace /profile.png with your photo */}
+        {/* Profile image */}
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -37,7 +37,7 @@ export function Hero() {
           <div className="absolute -inset-2 rounded-full bg-[#7dd3fc]/10 blur-xl" aria-hidden="true" />
           <div className="relative h-32 w-32 overflow-hidden rounded-full border border-white/15 shadow-2xl sm:h-36 sm:w-36">
             <Image
-              src="/profile.png"
+              src="/display_pic.jpeg"
               alt="Portrait of Devesh Maheshwari"
               fill
               priority
