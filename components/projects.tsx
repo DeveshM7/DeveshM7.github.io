@@ -12,7 +12,7 @@ export function Projects() {
   const reduce = useReducedMotion()
 
   return (
-    <section id="projects" className="bg-[#f7f8fa] px-4 py-24 sm:px-6">
+    <section id="projects" className="bg-[#eceff4] px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Selected Work"
@@ -26,7 +26,7 @@ export function Projects() {
               <motion.div
                 whileHover={reduce ? undefined : { y: -6 }}
                 transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="group h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-white shadow-sm transition-shadow duration-300 hover:shadow-xl"
+                className="group h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-[#f6f8fb] shadow-sm transition-shadow duration-300 hover:shadow-xl"
               >
                 <Link href={`/projects/${project.slug}`} className="block">
                   {/* Project image — TODO: replace images in /public/projects */}
