@@ -130,9 +130,63 @@ export type Project = {
   tags: string[]
   /* TODO: replace with your real project image paths */
   image: string
+  /* Optional rich detail-page content */
+  github?: string
+  /* Wide image shown at the top of the detail page (e.g. a schematic) */
+  schematic?: string
+  /* Write-up rendered as titled sections on the detail page */
+  sections?: { heading: string; body: string }[]
+  /* Photo gallery rendered below the write-up */
+  gallery?: { src: string; caption: string }[]
+  /* Demo video shown at the bottom of the detail page */
+  video?: string
 }
 
 export const projects: Project[] = [
+  {
+    slug: "gesture-controlled-game",
+    title: "Gesture-Controlled Game",
+    category: "Embedded Systems Project",
+    description:
+      "A Frogger-style arcade game on a Raspberry Pi RP2350, played entirely with hand swipes over an APDS-9960 gesture sensor — dual-core firmware, SPI LCD rendering, PWM audio, and an SD-card leaderboard.",
+    tags: ["RP2350", "C", "Embedded C", "I2C", "SPI", "Dual-Core", "FatFS"],
+    image: "/projects/gesture_game/In_game.jpeg",
+    github: "https://github.com/DeveshM7/ECE362_Gesture_Control_Project",
+    schematic: "/projects/gesture_game/Schematic.jpeg",
+    sections: [
+      {
+        heading: "Overview",
+        body: "Gesture-Controlled Game is the final project for ECE 362 (Microprocessor Systems & Interfacing) at Purdue. It's a Frogger-style arcade game that runs bare-metal on a Raspberry Pi RP2350 and is controlled with nothing but hand motion: players swipe up, down, left, or right over an APDS-9960 optical sensor to steer a character across a scrolling field of obstacles on a TFT LCD. The goal was to turn a pile of peripherals — an I2C gesture sensor, an SPI display, a PWM speaker, push buttons, and an SD card — into a single responsive, self-contained game console.",
+      },
+      {
+        heading: "Hardware",
+        body: "The system is built around the RP2350 (Proton board, Pico SDK). An APDS-9960 sensor connects over I2C (GPIO 4/5) for gesture input, a 240×320 SPI TFT LCD (GPIO 16–22) handles rendering, and a PWM-driven speaker on GPIO 36 produces sound. Two push buttons provide hardware play/pause, and a micro-SD card stores the persistent leaderboard. Everything runs from a shared 3.3 V rail.",
+      },
+      {
+        heading: "Gesture Detection",
+        body: "The APDS-9960 detects motion with an IR LED and four directional photodiodes (up, down, left, right). The driver configures the sensor over I2C at 400 kHz — LED pulse counts, gain, proximity entry/exit thresholds, and a 300% LED boost — then drains the on-chip gesture FIFO while a swipe is in progress, accumulating per-direction photodiode counts. When the gesture ends, it compares the dominant axis (up–down vs. left–right) against a tuned threshold to classify the swipe into one of four directions, rejecting noise below the threshold.",
+      },
+      {
+        heading: "Dual-Core Architecture",
+        body: "To keep input latency low without stalling rendering, the firmware splits work across both RP2350 cores. Core 1 runs a tight gesture-detection loop and pushes decoded directions through the inter-core FIFO; Core 0 runs the game itself — a state machine over MAIN_MENU, PLAYING, PAUSED, and GAME_OVER. Decoupling sensing from the game loop means swipes are read continuously while the display and game logic update independently.",
+      },
+      {
+        heading: "Game Engine",
+        body: "The game world is a grid of scrolling obstacle rows rendered through a custom SPI LCD driver. Partial redraws (erasing only the player's previous cell) eliminate flicker, and the scroll step, spawn rate, and scroll rate are exposed as tunable difficulty parameters. Axis-aligned bounding-box collision detection checks the player against every active obstacle each frame; a hit drops the machine into GAME_OVER. A PWM speaker adds start and death sounds using fixed-point wavetable synthesis.",
+      },
+      {
+        heading: "Leaderboard & Persistence",
+        body: "Players enter a username over a UART serial console at startup. Scores are persisted to a CSV file on the SD card through the FatFS filesystem, with load, sort, and save routines maintaining a ranked top-10 leaderboard that survives power cycles. The current high score is surfaced on the main menu and updated live as you play.",
+      },
+    ],
+    gallery: [
+      { src: "/projects/gesture_game/In_game.jpeg", caption: "Gameplay — steering the player across scrolling obstacle rows" },
+      { src: "/projects/gesture_game/Leaderboard.jpeg", caption: "SD-card leaderboard showing the persistent top-10 scores" },
+      { src: "/projects/gesture_game/Pause.jpeg", caption: "Pause screen, toggled with the hardware buttons" },
+      { src: "/projects/gesture_game/Over.jpeg", caption: "Game-over screen after a collision" },
+    ],
+    video: "/projects/gesture_game/Gameplay.mp4",
+  },
   {
     slug: "lunar-lander-game",
     title: "Lunar Lander Game",
