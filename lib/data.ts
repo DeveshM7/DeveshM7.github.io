@@ -190,11 +190,45 @@ export const projects: Project[] = [
   {
     slug: "lunar-lander-game",
     title: "Lunar Lander Game",
-    category: "FPGA / Verilog Project",
+    category: "FPGA / SystemVerilog Project",
     description:
-      "Engineered modular Verilog components for an FPGA lunar lander simulation, including ALU, memory, control, and display units.",
-    tags: ["Verilog", "FPGA", "Digital Design", "BCD", "Hardware Testing"],
-    image: "/projects/lunar-lander.png",
+      "A lunar-lander game built entirely in synthesizable SystemVerilog — no CPU, no software, just digital logic on an FPGA. Burn fuel to control a descent and touch down softly before you run out of altitude.",
+    tags: ["SystemVerilog", "FPGA", "Digital Design", "BCD Arithmetic", "FSM", "RTL"],
+    image: "/projects/fpga/altitude.png",
+    github: "https://github.com/DeveshM7/Lunar-Lander-FPGA",
+    sections: [
+      {
+        heading: "Overview",
+        body: "Lunar Lander is a classic descent game implemented purely in hardware. There's no processor and no firmware — the entire game is synthesizable SystemVerilog running as digital logic on an FPGA lab board. The player burns fuel to slow a falling lander, entering thrust values on the board's keypad and watching altitude, velocity, fuel, and thrust on the seven-segment displays. Touch down slowly enough and a green LED signals a safe landing; hit the surface too fast and a red LED signals a crash. Every quantity is tracked in binary-coded decimal so state values map directly onto the displays.",
+      },
+      {
+        heading: "Architecture",
+        body: "The design follows a clean datapath–control–I/O hierarchy: a top-level wrapper maps board pins into a lunarlander module that wires together state memory, an arithmetic unit, control logic, and a display driver. State and game logic advance on a slow game-tick clock derived from the board's 100 Hz reference by a programmable clock prescaler, keeping the simulation at a playable rate while the rest of the logic runs combinationally.",
+      },
+      {
+        heading: "Physics Engine",
+        body: "An arithmetic unit computes the next state each tick: altitude integrates velocity (alt' = alt + vel), velocity accumulates gravity and thrust (vel' = vel − gravity + thrust, with thrust applied only while fuel remains), and fuel depletes by the thrust burned. The datapath clamps altitude and velocity to zero at the ground and fuel to zero when the tank empties, so the simulation behaves correctly at its boundaries.",
+      },
+      {
+        heading: "Game Logic",
+        body: "A control block watches for ground contact by testing altitude against the incoming velocity, then decides the outcome: a crash if the descent velocity exceeds the safe threshold, otherwise a successful landing. Once the lander has landed or crashed, the control logic freezes state updates and latches the result, driving the red (crash) and green (land) status LEDs.",
+      },
+      {
+        heading: "BCD Datapath",
+        body: "Because the displays are decimal, all math is done in BCD. The arithmetic is built bottom-up from gate-level full adders into a 4-bit adder, then a single-digit BCD adder with the classic +6 overflow correction, a four-digit ripple adder, and finally a BCD add/subtract unit that handles subtraction via nine's-complement and a carry-in for ten's-complement arithmetic. This stack powers every calculation in the game.",
+      },
+      {
+        heading: "Input & Display",
+        body: "A keypad synchronizer debounces the 20 pushbuttons, encodes the pressed key, and generates a clean key-press strobe — numeric keys set thrust, while mode keys switch the displayed value between altitude, velocity, fuel, and thrust. The display driver selects the active value, renders a text label on the left digits, blanks leading zeros, and shows signed velocity using the BCD subtract unit and a minus-sign segment pattern.",
+      },
+    ],
+    gallery: [
+      { src: "/projects/fpga/altitude.png", caption: "Altitude mode — current height above the surface" },
+      { src: "/projects/fpga/velocity.png", caption: "Velocity mode — descent rate, shown signed when falling" },
+      { src: "/projects/fpga/gas.png", caption: "Fuel mode — remaining fuel, depleted by thrust" },
+      { src: "/projects/fpga/thrust.png", caption: "Thrust mode — thrust value entered on the keypad" },
+    ],
+    video: "/projects/fpga/gameplay.mp4",
   },
   {
     slug: "advanced-custom-bash-shell",

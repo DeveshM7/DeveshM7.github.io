@@ -101,8 +101,9 @@ export default async function ProjectPage({
           )}
         </Reveal>
 
-        {/* Top image — schematic when available, otherwise the hero image */}
-        <Reveal delay={0.1}>
+        {/* Top image — schematic when available; generic hero only for template projects */}
+        {(project.schematic || !project.sections) && (
+          <Reveal delay={0.1}>
           {project.schematic ? (
             <figure className="mt-10">
               <div className="mx-auto flex max-w-2xl items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white p-3">
@@ -132,7 +133,8 @@ export default async function ProjectPage({
               />
             </div>
           )}
-        </Reveal>
+          </Reveal>
+        )}
 
         {/* Write-up sections */}
         <div className="mt-14 flex flex-col gap-12">
@@ -162,7 +164,7 @@ export default async function ProjectPage({
                             alt={shot.caption}
                             fill
                             sizes="(max-width: 640px) 100vw, 440px"
-                            className="object-cover"
+                            className="object-contain"
                           />
                         </div>
                         <figcaption className="px-4 py-3 text-sm leading-snug text-[#aeb6c2]">
