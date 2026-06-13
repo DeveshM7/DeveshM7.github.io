@@ -48,8 +48,8 @@ export const quickFacts: { label: string; value: string }[] = [
   { label: "University", value: "Purdue University" },
   { label: "Major", value: "CS + EE Dual Major" },
   { label: "GPA", value: "3.98 / 4.00" },
-  { label: "Graduation", value: "Dec 2026" },
-  { label: "Based in", value: "West Lafayette / Santa Clara" },
+  { label: "Graduation", value: "May 2027" },
+  { label: "Based in", value: "Santa Clara, CA" },
 ]
 
 /* ------------------------------------------------------------------ */

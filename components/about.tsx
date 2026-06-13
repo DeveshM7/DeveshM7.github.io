@@ -16,14 +16,17 @@ export function About() {
                 Engineering across software, AI, and silicon.
               </h2>
               <p className="mt-5 leading-relaxed text-[#6b7280]">
-                I build intelligent systems across the backend — from LLM-powered workflows
-                and backend services and APIs down to compilers, FPGA designs, and embedded firmware.
-                I&apos;m drawn to problems where rigorous engineering meets real-world impact.
+                I&apos;m a Computer Science and Electrical Engineering student at Purdue, drawn to
+                systems that sit at the intersection of software, AI, and hardware. My work spans
+                backend and systems engineering, AI-driven tools, and embedded development — from
+                custom compilers and shells to AI agents, telemetry and benchmarking pipelines, FPGA
+                designs, and analog hardware.
               </p>
               <p className="mt-4 leading-relaxed text-[#6b7280]">
-                Currently a senior at Purdue, I split my time between research on embedded LLM
-                benchmarking and hands-on internships at companies building platforms, AI tooling,
-                and developer infrastructure.
+                Right now I&apos;m focused on applying AI to real-world engineering workflows —
+                embedded software, developer tooling, automation, and robotics-adjacent systems.
+                I&apos;m most drawn to work where strong software engineering meets hardware
+                awareness, and where AI makes complex technical systems more usable and scalable.
               </p>
             </div>
           </Reveal>
