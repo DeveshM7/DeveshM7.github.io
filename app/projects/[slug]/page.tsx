@@ -1,9 +1,9 @@
 import Image from "next/image"
-import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, FileText } from "lucide-react"
+import { FileText } from "lucide-react"
 import { getProject, projects } from "@/lib/data"
 import { GithubIcon } from "@/components/brand-icons"
+import { BackToProjects } from "@/components/back-to-projects"
 import { Reveal } from "@/components/reveal"
 
 export function generateStaticParams() {
@@ -57,13 +57,7 @@ export default async function ProjectPage({
       {/* Top bar with back button */}
       <div className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0d10]/70 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-4xl items-center px-4 sm:px-6">
-          <Link
-            href="/#projects"
-            className="inline-flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-[#aeb6c2] transition-colors hover:text-[#f5f7fa]"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to projects
-          </Link>
+          <BackToProjects />
         </div>
       </div>
 
