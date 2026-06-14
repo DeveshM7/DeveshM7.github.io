@@ -4,6 +4,7 @@ import { FileText } from "lucide-react"
 import { getProject, projects } from "@/lib/data"
 import { GithubIcon } from "@/components/brand-icons"
 import { BackToProjects } from "@/components/back-to-projects"
+import { ProjectGallery, type GalleryGroup } from "@/components/project-gallery"
 import { Reveal } from "@/components/reveal"
 
 export function generateStaticParams() {
@@ -51,6 +52,8 @@ export default async function ProjectPage({
 
   const sections = project.sections ?? placeholderSections
   const topImage = project.schematic ?? project.image
+  const galleryGroups: GalleryGroup[] | null =
+    project.galleryGroups ?? (project.gallery ? [{ images: project.gallery }] : null)
 
   return (
     <main className="min-h-svh bg-[#0b0d10]">
@@ -160,28 +163,12 @@ export default async function ProjectPage({
           <Reveal delay={0.1}>
             <section>
               <h2 className="text-xl font-semibold text-[#f5f7fa]">Gallery</h2>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {project.gallery
-                  ? project.gallery.map((shot) => (
-                      <figure
-                        key={shot.src}
-                        className="overflow-hidden rounded-2xl border border-white/10 bg-[#111418]"
-                      >
-                        <div className="relative aspect-[4/3]">
-                          <Image
-                            src={shot.src}
-                            alt={shot.caption}
-                            fill
-                            sizes="(max-width: 640px) 100vw, 440px"
-                            className="object-contain"
-                          />
-                        </div>
-                        <figcaption className="px-4 py-3 text-sm leading-snug text-[#aeb6c2]">
-                          {shot.caption}
-                        </figcaption>
-                      </figure>
-                    ))
-                  : [0, 1].map((n) => (
+              <div className="mt-6">
+                {galleryGroups ? (
+                  <ProjectGallery groups={galleryGroups} />
+                ) : (
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {[0, 1].map((n) => (
                       <div
                         key={n}
                         className="grid-bg flex aspect-[4/3] items-center justify-center rounded-2xl border border-white/10 bg-[#111418]"
@@ -191,6 +178,8 @@ export default async function ProjectPage({
                         </span>
                       </div>
                     ))}
+                  </div>
+                )}
               </div>
             </section>
           </Reveal>

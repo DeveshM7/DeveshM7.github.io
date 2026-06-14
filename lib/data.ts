@@ -138,6 +138,8 @@ export type Project = {
   sections?: { heading: string; body: string }[]
   /* Photo gallery rendered below the write-up */
   gallery?: { src: string; caption: string }[]
+  /* Gallery split into labeled groups (takes precedence over `gallery`) */
+  galleryGroups?: { title: string; images: { src: string; caption: string }[] }[]
   /* Demo video shown at the bottom of the detail page */
   video?: string
   /* Link to a full write-up / report PDF */
@@ -274,6 +276,71 @@ export const projects: Project[] = [
       { src: "/projects/hr_sensor/HR_post_LPF.png", caption: "Low-pass filter response — measured cutoff 3.76 Hz, gain ×14" },
       { src: "/projects/hr_sensor/HR_cascaded_filter.png", caption: "Cascaded filter output — a clean ±3 V heartbeat waveform" },
       { src: "/projects/hr_sensor/HR_comparator_binary_output.png", caption: "Comparator output — digital pulse train aligned to each heartbeat" },
+    ],
+  },
+  {
+    slug: "audio-equalizer",
+    title: "Three-Band Audio Equalizer",
+    category: "Analog Circuit Design Project",
+    description:
+      "A fully analog three-band audio equalizer that splits a signal into bass, mid, and treble paths with independent gain control, recombines them through a summing amplifier, and drives an 8 Ω speaker via an LM386 power stage at 545 mW.",
+    tags: ["Analog Design", "Active Filters", "Op-Amps", "LM386", "Audio", "Summing Amplifier"],
+    image: "/projects/audio_eq/schematic.png",
+    schematic: "/projects/audio_eq/schematic.png",
+    report: "/projects/audio_eq/report.pdf",
+    sections: [
+      {
+        heading: "Overview",
+        body: "This is a fully analog three-band audio equalizer that gives hands-on tonal control over any audio source. The input signal is split into bass, midrange, and treble paths, each with an independent user-adjustable gain, then recombined into a single output and amplified to drive an 8 Ω speaker. The whole chain — filtering, per-band gain, recombination, and power amplification — is built from discrete op-amps, passives, and an LM386, running on ±5 V rails. It was a partnered final project for an analog electronics course.",
+      },
+      {
+        heading: "Three-Band Filtering",
+        body: "The signal is divided into three frequency bands using RC and LC filters targeting –3 dB cutoffs around 320 Hz and 3200 Hz. A low-pass filter (47 Ω, 10 µF) isolates the bass with a ~339 Hz cutoff, a high-pass filter (56 Ω, 1 µF) isolates the treble at ~2841 Hz, and an LC band-pass filter (1 mH, 22 µF, 22 Ω) handles the midrange centered near 1075 Hz. Each band's response was verified with frequency-response analysis on the oscilloscope.",
+      },
+      {
+        heading: "Per-Band Gain Control",
+        body: "Each band passes through an inverting op-amp stage with a fixed 6.7 kΩ input resistor and a 10 Ω–10 kΩ potentiometer as the feedback element, giving a gain range from roughly 0 (full mute) up to about 1.5×. This lets the user boost or cut each band independently without the stages loading one another. Applying gain here proved essential to offset voltage losses incurred later in recombination and power amplification.",
+      },
+      {
+        heading: "Recombination & Power Stage",
+        body: "The three adjusted bands are merged by an inverting summing amplifier (matched 47 kΩ input resistors with a shared feedback potentiometer), preserving their relative amplitudes and phases in one combined signal. That output feeds an LM386 Class-AB power amplifier, which supplies the current needed to drive an 8 Ω speaker directly — delivering 545 mW, comfortably above the 400 mW target.",
+      },
+      {
+        heading: "Results",
+        body: "The build met every design target. Low-pass and high-pass cutoffs landed within ~1% of their goals (316 Hz and 3162 Hz), and the mid-band edges (355 Hz / 3.55 kHz) sat within the 10% tolerance. At minimum settings the output was essentially muted (well under the 15 mVrms limit); at maximum it held 93–106 mVrms across 100 Hz / 1 kHz / 10 kHz (spec: 100 mVrms ±10%). Output ripple was 13.6 mVrms (under 15 mVrms), and the amplifier delivered 545 mW into 8 Ω. Remaining deviations trace to component tolerances, finite op-amp bandwidth, and measurement uncertainty. Full plots, calculations, and error analysis are in the report below.",
+      },
+    ],
+    galleryGroups: [
+      {
+        title: "Filter Frequency Responses",
+        images: [
+          { src: "/projects/audio_eq/lpf_fra.png", caption: "Low-pass filter — measured –3 dB cutoff at 316 Hz" },
+          { src: "/projects/audio_eq/mpf_fra.png", caption: "Mid-pass filter — band edges at 355 Hz and 3.55 kHz" },
+          { src: "/projects/audio_eq/hpf_fra.png", caption: "High-pass filter — measured –3 dB cutoff at 3.16 kHz" },
+        ],
+      },
+      {
+        title: "Output at Minimum Setting",
+        images: [
+          { src: "/projects/audio_eq/min-100.png", caption: "100 Hz — output muted (≈0 mVrms)" },
+          { src: "/projects/audio_eq/min-1000.png", caption: "1 kHz — output muted (≈0 mVrms)" },
+          { src: "/projects/audio_eq/min-10000.png", caption: "10 kHz — output muted (≈0 mVrms)" },
+        ],
+      },
+      {
+        title: "Output at Maximum Setting",
+        images: [
+          { src: "/projects/audio_eq/max-100.png", caption: "100 Hz — output ≈ 98.6 mVrms" },
+          { src: "/projects/audio_eq/max-1000.png", caption: "1 kHz — output ≈ 93.3 mVrms" },
+          { src: "/projects/audio_eq/max-10000.png", caption: "10 kHz — output ≈ 105.6 mVrms" },
+        ],
+      },
+      {
+        title: "Power Output",
+        images: [
+          { src: "/projects/audio_eq/dev-pow1.png", caption: "Power stage — 2.089 Vrms into 8 Ω ≈ 545 mW" },
+        ],
+      },
     ],
   },
   {
