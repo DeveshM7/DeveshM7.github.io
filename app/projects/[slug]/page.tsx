@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, FileText } from "lucide-react"
 import { getProject, projects } from "@/lib/data"
 import { GithubIcon } from "@/components/brand-icons"
 import { Reveal } from "@/components/reveal"
@@ -88,16 +88,31 @@ export default async function ProjectPage({
               </li>
             ))}
           </ul>
-          {project.github && (
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
-            >
-              <GithubIcon className="h-4 w-4" />
-              View on GitHub
-            </a>
+          {(project.github || project.report) && (
+            <div className="mt-6 flex flex-wrap gap-3">
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
+                >
+                  <GithubIcon className="h-4 w-4" />
+                  View on GitHub
+                </a>
+              )}
+              {project.report && (
+                <a
+                  href={project.report}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
+                >
+                  <FileText className="h-4 w-4" />
+                  Read full report (PDF)
+                </a>
+              )}
+            </div>
           )}
         </Reveal>
 
@@ -111,7 +126,7 @@ export default async function ProjectPage({
                   src={topImage}
                   alt={`${project.title} schematic`}
                   width={1600}
-                  height={1600}
+                  height={1000}
                   priority
                   sizes="(max-width: 896px) 100vw, 672px"
                   className="h-auto w-full rounded-lg object-contain"

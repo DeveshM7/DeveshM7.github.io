@@ -140,6 +140,8 @@ export type Project = {
   gallery?: { src: string; caption: string }[]
   /* Demo video shown at the bottom of the detail page */
   video?: string
+  /* Link to a full write-up / report PDF */
+  report?: string
 }
 
 export const projects: Project[] = [
@@ -229,6 +231,50 @@ export const projects: Project[] = [
       { src: "/projects/fpga/thrust.png", caption: "Thrust mode — thrust value entered on the keypad" },
     ],
     video: "/projects/fpga/gameplay.mp4",
+  },
+  {
+    slug: "heart-rate-sensor",
+    title: "Optical Heart-Rate Sensor",
+    category: "Analog Circuit Design Project",
+    description:
+      "A complete analog front-end that turns tiny optical fluctuations from an IR LED–phototransistor pair into a clean digital heartbeat pulse — using photoplethysmography (PPG), cascaded active filters, and a comparator with hysteresis.",
+    tags: ["Analog Design", "PPG", "Active Filters", "Op-Amps", "LM339", "Biomedical"],
+    image: "/projects/hr_sensor/schematic.png",
+    schematic: "/projects/hr_sensor/schematic.png",
+    report: "/projects/hr_sensor/report.pdf",
+    sections: [
+      {
+        heading: "Overview",
+        body: "This project is a complete analog signal chain for real-time optical heart-rate detection based on photoplethysmography (PPG). As the heart pumps, changing blood volume modulates how much infrared light passes through a fingertip; an IR LED–phototransistor pair captures this as a tiny electrical signal — roughly 70 mVpp of AC riding on a 2.0–2.2 V DC level. The challenge is pulling that small, drifting signal out of a large variable offset and turning it into a reliable digital pulse, one transition per heartbeat. The design does this entirely in analog hardware, divided into four subsystems: an optical sensor front-end, cascaded active filters, a comparator with hysteresis, and an LED indicator.",
+      },
+      {
+        heading: "Optical Sensor Front-End",
+        body: "An IR204 infrared LED illuminates the finger and a PT204-6B phototransistor converts the transmitted light back into current. A series resistor (two 82 Ω resistors in parallel, ≈41 Ω, to stay within the 0.25 W power limit) sets the LED drive current to about 88 mA, and a 10 kΩ emitter resistor was chosen experimentally to keep the phototransistor out of saturation while producing a visible AC ripple. This stage delivers a 2.0–2.2 V DC level with the small heartbeat AC component superimposed on top.",
+      },
+      {
+        heading: "Cascaded Active Filters",
+        body: "Two non-inverting op-amp stages (LM358) isolate the physiological heart-rate band of 40–200 BPM (0.67–3.33 Hz) while amplifying the signal. A high-pass stage strips the large DC offset with a measured cutoff of 0.60 Hz and a gain of ×16, and a low-pass stage suppresses high-frequency noise with a measured cutoff of 3.76 Hz and a gain of ×14. Cascaded, they target a midband gain near 48 dB (×251); the measured ≈44.7 dB (×172) came in lower because, at a 10 mV input, the high combined gain drives the op-amps near their rails and compresses the waveform — a clear illustration of output-swing limiting in high-gain biomedical front-ends.",
+      },
+      {
+        heading: "Comparator with Hysteresis",
+        body: "The filtered ±3 V heartbeat waveform feeds an LM339 comparator wired in an inverting configuration with a positive-feedback resistor divider, creating a hysteresis window so noise near the threshold can't cause false retriggering. The measured hysteresis was 1.93 V against a calculated 1.99 V (about 3% error), and the comparator cleanly digitized the waveform — pulsing low on each heartbeat peak and high between beats — producing a noise-free pulse train aligned to the actual heartbeats.",
+      },
+      {
+        heading: "LED Indicator",
+        body: "The comparator output drives the gate of an NMOS transistor that switches an indicator LED through a 150 Ω series resistor, setting the LED current to about 20 mA — within the safe rating and clearly visible. Because the comparator is inverting, the LED turns off at each heartbeat peak and on between beats, blinking in real time with the detected pulse.",
+      },
+      {
+        heading: "Results & Validation",
+        body: "All subsystems were characterized with an Analog Discovery 2 (function generator, oscilloscope, and supply). Filter cutoffs landed within ~1% (high-pass) and ~11% (low-pass) of design targets, individual stage gains matched theory closely (16.14 vs 16, 14.13 vs 15.7), and the comparator hysteresis was within ~3%. The end-to-end chain reliably extracted, amplified, filtered, and digitized the PPG signal into a stable heartbeat pulse train. The full design calculations, measured frequency responses, and error analysis are in the report below.",
+      },
+    ],
+    gallery: [
+      { src: "/projects/hr_sensor/HR_raw.png", caption: "Raw optical sensor output — ~70 mVpp ripple on a 2.0–2.2 V DC level" },
+      { src: "/projects/hr_sensor/HR_post_HPF.png", caption: "High-pass filter response — measured cutoff 0.60 Hz, gain ×16" },
+      { src: "/projects/hr_sensor/HR_post_LPF.png", caption: "Low-pass filter response — measured cutoff 3.76 Hz, gain ×14" },
+      { src: "/projects/hr_sensor/HR_cascaded_filter.png", caption: "Cascaded filter output — a clean ±3 V heartbeat waveform" },
+      { src: "/projects/hr_sensor/HR_comparator_binary_output.png", caption: "Comparator output — digital pulse train aligned to each heartbeat" },
+    ],
   },
   {
     slug: "advanced-custom-bash-shell",
