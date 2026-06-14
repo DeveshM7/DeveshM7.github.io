@@ -239,7 +239,7 @@ export const projects: Project[] = [
     description:
       "A complete analog front-end that turns tiny optical fluctuations from an IR LED–phototransistor pair into a clean digital heartbeat pulse — using photoplethysmography (PPG), cascaded active filters, and a comparator with hysteresis.",
     tags: ["Analog Design", "PPG", "Active Filters", "Op-Amps", "LM339", "Biomedical"],
-    image: "/projects/hr_sensor/HR_comparator_binary_output.png",
+    image: "/projects/hr_sensor/preview.png",
     schematic: "/projects/hr_sensor/schematic.png",
     report: "/projects/hr_sensor/report.pdf",
     sections: [
