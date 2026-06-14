@@ -210,8 +210,7 @@ export default async function ProjectPage({
                   <video
                     controls
                     playsInline
-                    preload="none"
-                    poster={project.image}
+                    preload="metadata"
                     className="h-auto w-full"
                   >
                     <source src={project.video} type="video/mp4" />

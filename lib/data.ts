@@ -152,7 +152,7 @@ export const projects: Project[] = [
     description:
       "A Frogger-style arcade game on a Raspberry Pi RP2350, played entirely with hand swipes over an APDS-9960 gesture sensor — dual-core firmware, SPI LCD rendering, PWM audio, and an SD-card leaderboard.",
     tags: ["RP2350", "C", "Embedded C", "I2C", "SPI", "Dual-Core", "FatFS"],
-    image: "/projects/gesture_game/Schematic.jpeg",
+    image: "/projects/gesture_game/preview.jpg",
     github: "https://github.com/DeveshM7/ECE362_Gesture_Control_Project",
     schematic: "/projects/gesture_game/Schematic.jpeg",
     sections: [
