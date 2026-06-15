@@ -159,30 +159,32 @@ export default async function ProjectPage({
             </Reveal>
           ))}
 
-          {/* Gallery */}
-          <Reveal delay={0.1}>
-            <section>
-              <h2 className="text-xl font-semibold text-[#f5f7fa]">Gallery</h2>
-              <div className="mt-6">
-                {galleryGroups ? (
-                  <ProjectGallery groups={galleryGroups} />
-                ) : (
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {[0, 1].map((n) => (
-                      <div
-                        key={n}
-                        className="grid-bg flex aspect-[4/3] items-center justify-center rounded-2xl border border-white/10 bg-[#111418]"
-                      >
-                        <span className="font-mono text-xs text-[#aeb6c2]/50">
-                          Gallery image {n + 1}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </section>
-          </Reveal>
+          {/* Gallery — shown when there are images, or as a placeholder on template pages */}
+          {(galleryGroups || !project.sections) && (
+            <Reveal delay={0.1}>
+              <section>
+                <h2 className="text-xl font-semibold text-[#f5f7fa]">Gallery</h2>
+                <div className="mt-6">
+                  {galleryGroups ? (
+                    <ProjectGallery groups={galleryGroups} />
+                  ) : (
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {[0, 1].map((n) => (
+                        <div
+                          key={n}
+                          className="grid-bg flex aspect-[4/3] items-center justify-center rounded-2xl border border-white/10 bg-[#111418]"
+                        >
+                          <span className="font-mono text-xs text-[#aeb6c2]/50">
+                            Gallery image {n + 1}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </section>
+            </Reveal>
+          )}
 
           {/* Demo video */}
           {project.video && (

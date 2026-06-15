@@ -348,18 +348,58 @@ export const projects: Project[] = [
     title: "Advanced Custom Bash Shell",
     category: "Systems Programming Project",
     description:
-      "Built a custom Unix-like shell in C/C++ with Lex/Yacc, supporting subshells, wildcards, loops, pipes, I/O redirection, and command-line editing.",
-    tags: ["C", "C++", "Lex/Yacc", "Linux", "Systems"],
+      "A custom Unix-like shell written in C/C++ with Lex and Yacc, supporting pipelines, I/O redirection, wildcard and environment expansion, subshells, and shell control flow (if / while / for).",
+    tags: ["C", "C++", "Lex/Yacc", "Linux", "Systems", "Processes"],
     image: "/projects/bash-shell.png",
+    sections: [
+      {
+        heading: "Overview",
+        body: "This project is a fully functional Unix-like command shell built from scratch in C/C++. It reads command lines, parses them into a structured command representation, and executes them by managing real processes — forking children, wiring up pipes and file descriptors, and waiting on or backgrounding jobs. The result behaves like a real shell: it runs programs with arguments, chains them with pipes, redirects input and output, expands wildcards and variables, and supports shell-level control flow.",
+      },
+      {
+        heading: "Lexing & Parsing",
+        body: "The command-line grammar is defined with Lex (tokenizer) and Yacc (parser). The lexer recognizes operators and special tokens — pipes, the redirection forms (>, >>, <, 2>, >&), background &, quotes, and control-flow keywords — while the Yacc grammar assembles them into a pipeline of commands with their arguments and I/O modifiers. This clean separation of tokenizing and grammar made it straightforward to extend the shell with new syntax.",
+      },
+      {
+        heading: "Pipelines & I/O Redirection",
+        body: "Each command stage is executed in its own forked process, with the parent connecting stages through pipes so the output of one feeds the input of the next. Redirection operators rewire a process's standard input, output, and error to files before exec — including append mode, separate or combined stderr, and reading from a file — and a trailing & runs the whole pipeline in the background instead of blocking the prompt.",
+      },
+      {
+        heading: "Expansions",
+        body: "Before execution, arguments pass through several expansion passes that mirror real shell behavior: wildcard globbing (* and ?) against the filesystem, environment-variable substitution with ${VAR}, tilde (~) expansion to the home directory, and subshell / command substitution using backticks, where the output of an inner command is captured and spliced back into the outer command line.",
+      },
+      {
+        heading: "Built-ins & Control Flow",
+        body: "Commands that must change the shell's own state are implemented as built-ins rather than external programs — cd, setenv, unsetenv, printenv, source (run commands from a file), and exit. On top of the basic command grammar, the shell also supports structured control flow — if / then / fi, while / do / done, and for / in / do / done — where conditions are evaluated as real commands and their exit status drives the branch, enabling small shell scripts to run directly.",
+      },
+    ],
   },
   {
     slug: "simple-c-compiler",
     title: "Simple C Compiler",
     category: "Compiler Design Project",
     description:
-      "Developed a compiler for a subset of C using Lex and Yacc, translating source code into x86-64 assembly with control flow and function handling.",
-    tags: ["C", "x86-64", "Compilers", "Parsing", "Symbol Tables"],
+      "A compiler for a subset of C, built with Lex and Yacc, that lexes and parses source code, tracks declarations in a symbol table, and emits working x86-64 assembly with control flow and function support.",
+    tags: ["C", "x86-64", "Compilers", "Parsing", "Symbol Tables", "Code Generation"],
     image: "/projects/c-compiler.png",
+    sections: [
+      {
+        heading: "Overview",
+        body: "This project is a compiler for a subset of the C language that takes source code all the way down to executable x86-64 assembly. It implements the core stages of a real compiler pipeline — lexical analysis, parsing, semantic tracking through a symbol table, and code generation — turning a high-level program into low-level instructions that run on the machine. The focus was on understanding how language constructs map onto registers, the stack, and control-flow at the assembly level.",
+      },
+      {
+        heading: "Lexing & Parsing",
+        body: "The front end uses Lex to tokenize the source into keywords, identifiers, literals, and operators, and a Yacc grammar to parse those tokens into the language's syntactic structure. The grammar encodes operator precedence and the rules for declarations, expressions, statements, and function definitions, rejecting malformed programs while building up the structure the later stages compile.",
+      },
+      {
+        heading: "Symbol Tables & Semantics",
+        body: "As declarations are parsed, the compiler records them in a symbol table that tracks identifiers along with the information needed for code generation — such as type and storage location. This lets the compiler resolve variable references, assign stack offsets, and distinguish scopes so that generated code reads and writes the correct locations.",
+      },
+      {
+        heading: "x86-64 Code Generation",
+        body: "The back end walks the parsed program and emits x86-64 assembly. Expressions are lowered into register and stack operations, control-flow constructs (conditionals and loops) are translated using labels and conditional jumps, and functions are implemented with proper prologues, epilogues, and calling-convention handling for arguments and return values — producing assembly that can be assembled and run.",
+      },
+    ],
   },
   {
     slug: "autonomous-motorsports-purdue",
