@@ -351,6 +351,7 @@ export const projects: Project[] = [
       "A custom Unix-like shell written in C/C++ with Lex and Yacc, supporting pipelines, I/O redirection, wildcard and environment expansion, subshells, and shell control flow (if / while / for).",
     tags: ["C", "C++", "Lex/Yacc", "Linux", "Systems", "Processes"],
     image: "/projects/bash-shell.png",
+    github: "https://github.com/DeveshM7/custom-shell",
     sections: [
       {
         heading: "Overview",
@@ -382,6 +383,7 @@ export const projects: Project[] = [
       "A compiler for a subset of C, built with Lex and Yacc, that lexes and parses source code, tracks declarations in a symbol table, and emits working x86-64 assembly with control flow and function support.",
     tags: ["C", "x86-64", "Compilers", "Parsing", "Symbol Tables", "Code Generation"],
     image: "/projects/c-compiler.png",
+    github: "https://github.com/DeveshM7/simple-c-compiler",
     sections: [
       {
         heading: "Overview",
