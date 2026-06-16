@@ -401,7 +401,7 @@ export const projects: Project[] = [
     description:
       "A Synopsys Sentaurus TCAD study of a 22 nm FinFET — simulating its Id–Vg characteristics, extracting device metrics, and analytically explaining how work function, fixed oxide charge, and interface traps shift threshold voltage, leakage, and subthreshold slope.",
     tags: ["TCAD", "Sentaurus", "FinFET", "Semiconductor Devices", "MOSFET Physics", "Device Modeling"],
-    image: "/projects/finfet_sim/part1/base-sat-log.png",
+    image: "/projects/finfet_sim/preview.jpeg",
     report: "/projects/finfet_sim/report.pdf",
     sections: [
       {
