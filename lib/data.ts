@@ -140,8 +140,14 @@ export type Project = {
   gallery?: { src: string; caption: string }[]
   /* Gallery split into labeled groups (takes precedence over `gallery`) */
   galleryGroups?: { title: string; images: { src: string; caption: string }[] }[]
-  /* Demo video shown at the bottom of the detail page */
+  /* Demo video shown on the detail page */
   video?: string
+  /* Where the video appears: "top" (hero, above the write-up) or "bottom" (default) */
+  videoPosition?: "top" | "bottom"
+  /* Heading for a bottom-positioned video (default "Demo") */
+  videoLabel?: string
+  /* Place the schematic after this many write-up sections instead of at the top */
+  schematicAfter?: number
   /* Link to a full write-up / report PDF */
   report?: string
 }
@@ -190,6 +196,7 @@ export const projects: Project[] = [
       { src: "/projects/gesture_game/Over.jpeg", caption: "Game-over screen after a collision" },
     ],
     video: "/projects/gesture_game/Gameplay.mp4",
+    videoLabel: "Gameplay Demo",
   },
   {
     slug: "lunar-lander-game",
@@ -233,6 +240,7 @@ export const projects: Project[] = [
       { src: "/projects/fpga/thrust.png", caption: "Thrust mode — thrust value entered on the keypad" },
     ],
     video: "/projects/fpga/gameplay.mp4",
+    videoLabel: "Gameplay Demo",
   },
   {
     slug: "heart-rate-sensor",
@@ -340,6 +348,38 @@ export const projects: Project[] = [
         images: [
           { src: "/projects/audio_eq/dev-pow1.png", caption: "Power stage — 2.089 Vrms into 8 Ω ≈ 545 mW" },
         ],
+      },
+    ],
+  },
+  {
+    slug: "electric-piano",
+    title: "555 Timer Electric Piano",
+    category: "Analog Circuit Design Project",
+    description:
+      "An electric piano built around the 555 timer in astable mode, where each key switches a different resistance into the oscillator's timing network to play a distinct musical tone through a speaker.",
+    tags: ["Analog Design", "555 Timer", "Oscillators", "Astable", "Audio", "LTspice"],
+    image: "/projects/electronic_piano/schematic.png",
+    schematic: "/projects/electronic_piano/schematic.png",
+    schematicAfter: 2,
+    video: "/projects/electronic_piano/demo.mp4",
+    videoPosition: "top",
+    report: "/projects/electronic_piano/report.pdf",
+    sections: [
+      {
+        heading: "Overview",
+        body: "This project uses a 555 timer as a sound-generating oscillator to build a simple electric piano: each button press plays a distinct musical tone through a speaker. It started as a study of the 555 timer's monostable and astable modes and grew into a hands-on audio application that turns the chip's square-wave output into music. The demo above shows it being played key by key.",
+      },
+      {
+        heading: "How It Works",
+        body: "The 555 runs in astable mode, free-running as an oscillator whose frequency is set by two resistors and a capacitor: f = 1.44 / ((Ra + 2·Rb)·C), with Ra fixed at 1 kΩ and C at 0.1 µF. The 'keys' are six buttons that tap a series chain of resistors (six 1 kΩ plus a 4.7 kΩ) at different points, each selecting a different Rb. Pressing a key further down the chain adds more resistance, lowering the frequency and producing a lower-pitched tone — so the row of buttons behaves like a small keyboard, each one mapped to its own note. The resulting square wave drives a small speaker directly.",
+      },
+      {
+        heading: "Exploring the 555 Timer",
+        body: "Before the piano, the project characterized the 555's two fundamental modes. In monostable mode it acts as a one-shot pulse generator (pulse width T = 1.1·R·C); a circuit was designed for a 3-second output pulse. In astable mode it free-runs as an oscillator with a configurable period and duty cycle — versions with 60% and 75% duty cycles were built to see how Ra and Rb shape the waveform. Every circuit was first simulated in LTspice and then validated on the oscilloscope.",
+      },
+      {
+        heading: "Results & Takeaways",
+        body: "The monostable and astable timings tracked theory closely — within a few percent of the predicted pulse widths and duty cycles. The piano's absolute tone frequencies came in roughly 18–32% lower than calculated, due to resistor and capacitor tolerances, breadboard parasitics, and switch and speaker loading. Crucially, though, the relative spacing between notes was preserved, so the scale still sounded harmonically correct — confirming that the incremental-Rb design works as intended. Suggested refinements include a potentiometer for volume control and a digital potentiometer for more precise tuning to standard notes.",
       },
     ],
   },

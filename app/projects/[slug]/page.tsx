@@ -1,3 +1,4 @@
+import { Fragment } from "react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import { FileText } from "lucide-react"
@@ -5,6 +6,7 @@ import { getProject, projects } from "@/lib/data"
 import { GithubIcon } from "@/components/brand-icons"
 import { BackToProjects } from "@/components/back-to-projects"
 import { ProjectGallery, type GalleryGroup } from "@/components/project-gallery"
+import { SchematicFigure } from "@/components/schematic-figure"
 import { Reveal } from "@/components/reveal"
 
 export function generateStaticParams() {
@@ -54,6 +56,18 @@ export default async function ProjectPage({
   const topImage = project.schematic ?? project.image
   const galleryGroups: GalleryGroup[] | null =
     project.galleryGroups ?? (project.gallery ? [{ images: project.gallery }] : null)
+
+  // Layout flags
+  const showTopSchematic = !!project.schematic && project.schematicAfter == null
+  const showHero = !project.schematic && !project.sections
+  const videoTop = !!project.video && project.videoPosition === "top"
+  const videoBottom = !!project.video && project.videoPosition !== "top"
+  const videoEl = project.video ? (
+    <video controls playsInline preload="metadata" className="h-auto w-full">
+      <source src={project.video} type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  ) : null
 
   return (
     <main className="min-h-svh bg-[#0b0d10]">
@@ -113,27 +127,16 @@ export default async function ProjectPage({
           )}
         </Reveal>
 
-        {/* Top image — schematic when available; generic hero only for template projects */}
-        {(project.schematic || !project.sections) && (
+        {/* Top media — schematic, a generic hero, or a top-positioned demo video */}
+        {showTopSchematic && (
           <Reveal delay={0.1}>
-          {project.schematic ? (
-            <figure className="mt-10">
-              <div className="mx-auto flex max-w-2xl items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white p-3">
-                <Image
-                  src={topImage}
-                  alt={`${project.title} schematic`}
-                  width={1600}
-                  height={1000}
-                  priority
-                  sizes="(max-width: 896px) 100vw, 672px"
-                  className="h-auto w-full rounded-lg object-contain"
-                />
-              </div>
-              <figcaption className="mt-3 text-center font-mono text-xs text-[#aeb6c2]/70">
-                Circuit schematic
-              </figcaption>
-            </figure>
-          ) : (
+            <div className="mt-10">
+              <SchematicFigure src={topImage} alt={`${project.title} schematic`} />
+            </div>
+          </Reveal>
+        )}
+        {showHero && (
+          <Reveal delay={0.1}>
             <div className="relative mt-10 aspect-[16/9] overflow-hidden rounded-2xl border border-white/10">
               <Image
                 src={topImage || "/placeholder.svg"}
@@ -144,19 +147,37 @@ export default async function ProjectPage({
                 className="object-cover"
               />
             </div>
-          )}
+          </Reveal>
+        )}
+        {videoTop && (
+          <Reveal delay={0.1}>
+            <div className="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-black">
+              {videoEl}
+            </div>
           </Reveal>
         )}
 
-        {/* Write-up sections */}
+        {/* Write-up sections (schematic optionally interleaved) */}
         <div className="mt-14 flex flex-col gap-12">
           {sections.map((section, i) => (
-            <Reveal key={section.heading} delay={i * 0.05}>
-              <section>
-                <h2 className="text-xl font-semibold text-[#f5f7fa]">{section.heading}</h2>
-                <p className="mt-3 leading-relaxed text-[#aeb6c2]">{section.body}</p>
-              </section>
-            </Reveal>
+            <Fragment key={section.heading}>
+              <Reveal delay={i * 0.05}>
+                <section>
+                  <h2 className="text-xl font-semibold text-[#f5f7fa]">{section.heading}</h2>
+                  <p className="mt-3 leading-relaxed text-[#aeb6c2]">{section.body}</p>
+                </section>
+              </Reveal>
+              {project.schematic &&
+                project.schematicAfter != null &&
+                i === project.schematicAfter - 1 && (
+                  <Reveal delay={0.05}>
+                    <SchematicFigure
+                      src={project.schematic}
+                      alt={`${project.title} schematic`}
+                    />
+                  </Reveal>
+                )}
+            </Fragment>
           ))}
 
           {/* Gallery — shown when there are images, or as a placeholder on template pages */}
@@ -186,21 +207,15 @@ export default async function ProjectPage({
             </Reveal>
           )}
 
-          {/* Demo video */}
-          {project.video && (
+          {/* Demo video (bottom-positioned) */}
+          {videoBottom && (
             <Reveal delay={0.1}>
               <section>
-                <h2 className="text-xl font-semibold text-[#f5f7fa]">Gameplay Demo</h2>
+                <h2 className="text-xl font-semibold text-[#f5f7fa]">
+                  {project.videoLabel ?? "Demo"}
+                </h2>
                 <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-black">
-                  <video
-                    controls
-                    playsInline
-                    preload="metadata"
-                    className="h-auto w-full"
-                  >
-                    <source src={project.video} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+                  {videoEl}
                 </div>
               </section>
             </Reveal>
