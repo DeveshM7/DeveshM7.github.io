@@ -369,7 +369,7 @@ export const projects: Project[] = [
     description:
       "An electric piano built around the 555 timer in astable mode, where each key switches a different resistance into the oscillator's timing network to play a distinct musical tone through a speaker.",
     tags: ["Analog Design", "555 Timer", "Oscillators", "Astable", "Audio", "LTspice"],
-    image: "/projects/electronic_piano/schematic.png",
+    image: "/projects/electronic_piano/preview.png",
     schematic: "/projects/electronic_piano/schematic.png",
     schematicAfter: 2,
     video: "/projects/electronic_piano/demo.mp4",
