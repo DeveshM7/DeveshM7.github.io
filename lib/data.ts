@@ -134,8 +134,16 @@ export type Project = {
   github?: string
   /* Wide image shown at the top of the detail page (e.g. a schematic) */
   schematic?: string
-  /* Write-up rendered as titled sections on the detail page */
-  sections?: { heading: string; body: string }[]
+  /* Write-up rendered as titled sections on the detail page.
+     A section may carry a flow diagram rendered below its text. */
+  sections?: {
+    heading: string
+    body: string
+    diagram?: {
+      caption?: string
+      steps: { label: string; sub?: string; arrow?: string }[]
+    }
+  }[]
   /* Photo gallery rendered below the write-up */
   gallery?: { src: string; caption: string }[]
   /* Gallery split into labeled groups (takes precedence over `gallery`) */
@@ -146,6 +154,8 @@ export type Project = {
   carousels?: { title: string; images: { src: string; caption: string }[] }[]
   /* Demo video shown on the detail page */
   video?: string
+  /* YouTube video ID — embedded instead of a self-hosted video when set */
+  youtube?: string
   /* Where the video appears: "top" (hero, above the write-up) or "bottom" (default) */
   videoPosition?: "top" | "bottom"
   /* Heading for a bottom-positioned video (default "Demo") */
@@ -486,12 +496,22 @@ export const projects: Project[] = [
     description:
       "A custom Unix-like shell written in C/C++ with Lex and Yacc, supporting pipelines, I/O redirection, wildcard and environment expansion, subshells, and shell control flow (if / while / for).",
     tags: ["C", "C++", "Lex/Yacc", "Linux", "Systems", "Processes"],
-    image: "/projects/bash-shell.png",
+    image: "/projects/shell/preview.svg",
     github: "https://github.com/DeveshM7/custom-shell",
     sections: [
       {
         heading: "Overview",
         body: "This project is a fully functional Unix-like command shell built from scratch in C/C++. It reads command lines, parses them into a structured command representation, and executes them by managing real processes — forking children, wiring up pipes and file descriptors, and waiting on or backgrounding jobs. The result behaves like a real shell: it runs programs with arguments, chains them with pipes, redirects input and output, expands wildcards and variables, and supports shell-level control flow.",
+        diagram: {
+          caption: "The lifecycle of a command line, from raw text to running processes.",
+          steps: [
+            { label: "Command line", sub: "raw text" },
+            { label: "Lexer", sub: "Flex", arrow: "scan" },
+            { label: "Parser", sub: "Yacc", arrow: "tokens" },
+            { label: "Command tree", sub: "pipeline + I/O", arrow: "build" },
+            { label: "Executor", sub: "fork · exec · wait", arrow: "run" },
+          ],
+        },
       },
       {
         heading: "Lexing & Parsing",
@@ -500,10 +520,30 @@ export const projects: Project[] = [
       {
         heading: "Pipelines & I/O Redirection",
         body: "Each command stage is executed in its own forked process, with the parent connecting stages through pipes so the output of one feeds the input of the next. Redirection operators rewire a process's standard input, output, and error to files before exec — including append mode, separate or combined stderr, and reading from a file — and a trailing & runs the whole pipeline in the background instead of blocking the prompt.",
+        diagram: {
+          caption: "Running ls -al | grep .c | wc -l: each stage is a forked child, and the parent connects each one's stdout to the next one's stdin with a pipe (dup2).",
+          steps: [
+            { label: "ls -al", sub: "child 1" },
+            { label: "grep .c", sub: "child 2", arrow: "pipe" },
+            { label: "wc -l", sub: "child 3", arrow: "pipe" },
+            { label: "terminal", sub: "stdout", arrow: "out" },
+          ],
+        },
       },
       {
         heading: "Expansions",
         body: "Before execution, arguments pass through several expansion passes that mirror real shell behavior: wildcard globbing (* and ?) against the filesystem, environment-variable substitution with ${VAR}, tilde (~) expansion to the home directory, and subshell / command substitution using backticks, where the output of an inner command is captured and spliced back into the outer command line.",
+        diagram: {
+          caption: "Each raw argument flows through the expansion passes before the final argv is handed to exec().",
+          steps: [
+            { label: "Raw tokens" },
+            { label: "Wildcards", sub: "* ?", arrow: "glob" },
+            { label: "Variables", sub: "${VAR}", arrow: "expand" },
+            { label: "Tilde", sub: "~ → home", arrow: "expand" },
+            { label: "Subshell", sub: "` `", arrow: "substitute" },
+            { label: "exec()", sub: "final argv", arrow: "run" },
+          ],
+        },
       },
       {
         heading: "Built-ins & Control Flow",

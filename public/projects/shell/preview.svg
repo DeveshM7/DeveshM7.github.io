@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="75%">
+      <stop offset="0%" stop-color="#10151b"/>
+      <stop offset="100%" stop-color="#0b0d10"/>
+    </radialGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7dd3fc" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#7dd3fc" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+
+  <!-- window -->
+  <g>
+    <rect x="170" y="150" width="1260" height="700" rx="22" fill="#0e1217" stroke="#ffffff" stroke-opacity="0.10"/>
+    <rect x="170" y="150" width="1260" height="180" fill="url(#glow)"/>
+    <!-- title bar -->
+    <rect x="170" y="150" width="1260" height="74" rx="22" fill="#151a21"/>
+    <rect x="170" y="200" width="1260" height="24" fill="#151a21"/>
+    <circle cx="214" cy="187" r="11" fill="#ff5f56"/>
+    <circle cx="252" cy="187" r="11" fill="#ffbd2e"/>
+    <circle cx="290" cy="187" r="11" fill="#27c93f"/>
+    <text x="800" y="195" text-anchor="middle" font-size="26" fill="#aeb6c2" opacity="0.8">custom-shell — myshell</text>
+
+    <!-- body -->
+    <g font-size="34">
+      <!-- $ ls -al | grep .c | wc -l -->
+      <text x="220" y="320"><tspan fill="#7dd3fc">$ </tspan><tspan fill="#e6edf3">ls -al </tspan><tspan fill="#7dd3fc">| </tspan><tspan fill="#e6edf3">grep .c </tspan><tspan fill="#7dd3fc">| </tspan><tspan fill="#e6edf3">wc -l</tspan></text>
+      <text x="220" y="376" fill="#8b94a3">12</text>
+
+      <!-- for loop -->
+      <text x="220" y="448"><tspan fill="#7dd3fc">$ </tspan><tspan fill="#e6edf3">for x </tspan><tspan fill="#c792ea">in</tspan><tspan fill="#e6edf3"> a b c; </tspan><tspan fill="#c792ea">do</tspan><tspan fill="#e6edf3"> echo ${x}; </tspan><tspan fill="#c792ea">done</tspan></text>
+      <text x="220" y="504" fill="#8b94a3">a</text>
+      <text x="220" y="552" fill="#8b94a3">b</text>
+      <text x="220" y="600" fill="#8b94a3">c</text>
+
+      <!-- redirect + background -->
+      <text x="220" y="672"><tspan fill="#7dd3fc">$ </tspan><tspan fill="#e6edf3">cat *.log </tspan><tspan fill="#7dd3fc">&gt; </tspan><tspan fill="#e6edf3">out.txt </tspan><tspan fill="#7dd3fc">&amp;</tspan></text>
+
+      <!-- prompt + cursor -->
+      <text x="220" y="744"><tspan fill="#7dd3fc">$ </tspan></text>
+      <rect x="258" y="716" width="20" height="36" fill="#7dd3fc"/>
+    </g>
+  </g>
+</svg>

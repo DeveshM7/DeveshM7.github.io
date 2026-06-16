@@ -8,6 +8,7 @@ import { BackToProjects } from "@/components/back-to-projects"
 import { ProjectGallery, type GalleryGroup } from "@/components/project-gallery"
 import { SchematicFigure } from "@/components/schematic-figure"
 import { Carousel } from "@/components/carousel"
+import { FlowDiagram } from "@/components/flow-diagram"
 import { Reveal } from "@/components/reveal"
 
 export function generateStaticParams() {
@@ -61,9 +62,20 @@ export default async function ProjectPage({
   // Layout flags
   const showTopSchematic = !!project.schematic && project.schematicAfter == null
   const showHero = !project.schematic && !project.sections
-  const videoTop = !!project.video && project.videoPosition === "top"
-  const videoBottom = !!project.video && project.videoPosition !== "top"
-  const videoEl = project.video ? (
+  const hasVideo = !!project.video || !!project.youtube
+  const videoTop = hasVideo && project.videoPosition === "top"
+  const videoBottom = hasVideo && project.videoPosition !== "top"
+  const videoEl = project.youtube ? (
+    <div className="relative aspect-video w-full">
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${project.youtube}`}
+        title={`${project.title} demo`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="absolute inset-0 h-full w-full"
+      />
+    </div>
+  ) : project.video ? (
     <video controls playsInline preload="metadata" className="h-auto w-full">
       <source src={project.video} type="video/mp4" />
       Your browser does not support the video tag.
@@ -166,6 +178,14 @@ export default async function ProjectPage({
                 <section>
                   <h2 className="text-xl font-semibold text-[#f5f7fa]">{section.heading}</h2>
                   <p className="mt-3 leading-relaxed text-[#aeb6c2]">{section.body}</p>
+                  {section.diagram && (
+                    <div className="mt-5">
+                      <FlowDiagram
+                        steps={section.diagram.steps}
+                        caption={section.diagram.caption}
+                      />
+                    </div>
+                  )}
                 </section>
               </Reveal>
               {project.schematic &&
