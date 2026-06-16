@@ -140,6 +140,10 @@ export type Project = {
   gallery?: { src: string; caption: string }[]
   /* Gallery split into labeled groups (takes precedence over `gallery`) */
   galleryGroups?: { title: string; images: { src: string; caption: string }[] }[]
+  /* Data tables rendered in the write-up */
+  tables?: { title: string; columns: string[]; rows: string[][]; note?: string }[]
+  /* Image carousels — flip through related plots in place */
+  carousels?: { title: string; images: { src: string; caption: string }[] }[]
   /* Demo video shown on the detail page */
   video?: string
   /* Where the video appears: "top" (hero, above the write-up) or "bottom" (default) */
@@ -380,6 +384,98 @@ export const projects: Project[] = [
       {
         heading: "Results & Takeaways",
         body: "The monostable and astable timings tracked theory closely — within a few percent of the predicted pulse widths and duty cycles. The piano's absolute tone frequencies came in roughly 18–32% lower than calculated, due to resistor and capacitor tolerances, breadboard parasitics, and switch and speaker loading. Crucially, though, the relative spacing between notes was preserved, so the scale still sounded harmonically correct — confirming that the incremental-Rb design works as intended. Suggested refinements include a potentiometer for volume control and a digital potentiometer for more precise tuning to standard notes.",
+      },
+    ],
+  },
+  {
+    slug: "finfet-tcad-simulation",
+    title: "FinFET Device Simulation (TCAD)",
+    category: "Semiconductor Device Simulation",
+    description:
+      "A Synopsys Sentaurus TCAD study of a 22 nm FinFET — simulating its Id–Vg characteristics, extracting device metrics, and analytically explaining how work function, fixed oxide charge, and interface traps shift threshold voltage, leakage, and subthreshold slope.",
+    tags: ["TCAD", "Sentaurus", "FinFET", "Semiconductor Devices", "MOSFET Physics", "Device Modeling"],
+    image: "/projects/finfet_sim/part1/base-sat-log.png",
+    report: "/projects/finfet_sim/report.pdf",
+    sections: [
+      {
+        heading: "Overview",
+        body: "This was the final project for ECE 305 (Semiconductor Devices) at Purdue, carried out in Synopsys Sentaurus TCAD. The goal was to simulate a 22 nm FinFET through its full fabrication-aware process flow, sweep its transfer characteristics, and then connect the simulated results back to first-principles device physics. The study ran in two parts: Part 1 looked at fixed oxide charge and gate work function, and Part 2 introduced energy-distributed interface traps — in each case extracting the key device parameters and verifying them with analytical equations.",
+      },
+      {
+        heading: "Simulation Setup",
+        body: "Each device was built and run in the Sentaurus Workbench, then post-processed in Sentaurus Visual to view the structure, doping profile, and electrical characteristics. Every transfer curve was simulated in two bias regimes — the linear region (V_DS = 0.05 V) and the saturation region (V_DS = 1.0 V) — and from the resulting Id–Vg curves I extracted threshold voltage (V_T), drain-induced barrier lowering (DIBL), on-current (I_ON), off-current (I_OFF), and subthreshold slope (SS). The gate stack is a SiO₂/HfO₂ bilayer, and the actual channel doping was extracted from the simulated structure rather than taken from the nominal input.",
+      },
+      {
+        heading: "Part 1 — Work Function & Fixed Charge",
+        body: "Holding the oxide thickness and doping fixed, I raised the gate work function from 4.2 to 4.5 eV and made the fixed interface charge more negative (−1×10¹¹ → −1×10¹² cm⁻²). Both push the threshold voltage up: V_T rose by ~0.31 V in the linear region, matching a hand calculation of ΔV_T ≈ ΔΦ_MS − ΔQ_ox/C_ox ≈ 0.35 V. The higher V_T reduces the gate overdrive, so I_ON falls (more steeply in saturation, per its quadratic dependence), while I_OFF drops by orders of magnitude — the measured I_OFF ratio of ~4.5×10⁻⁴ closely tracks the exp(−ΔV_T / nV_th) prediction of ~5.2×10⁻⁴. SS and DIBL stayed nearly constant, as expected since C_ox, C_dep, and device geometry were unchanged.",
+      },
+      {
+        heading: "Part 2 — Interface Traps",
+        body: "Part 2 replaced the fixed charge with energy-distributed acceptor traps at the oxide/silicon interface (N_trap = 1.8×10¹³ cm⁻²eV⁻¹ over a spread E_s = 1.1 eV). These traps add a trap capacitance C_it that degrades the subthreshold slope and shifts V_T. Using the doping extracted from the structure (N_A = 4.05×10¹⁸ cm⁻³) and the measured gate-stack capacitance, the analytical SS = S₀(1 + (C_dep + C_it)/C_ox) gives ≈165.5 mV/dec versus 165.99 mV/dec in simulation, and the predicted V_T of ≈0.866 V matches the simulated 0.857 V — numerically reproducing the TCAD result from device equations.",
+      },
+      {
+        heading: "Takeaways",
+        body: "The project tied TCAD simulation back to analytical MOSFET theory: work function and fixed charge move V_T through the flat-band voltage, threshold shifts drive exponential changes in off-current, and interface traps degrade the subthreshold slope through C_it — each effect predicted by hand to within a few percent of simulation. The full set of extracted parameters, derivations, and Id–Vg plots are in the report and the carousels below.",
+      },
+    ],
+    tables: [
+      {
+        title: "Simulation Conditions (Part 1)",
+        columns: ["Parameter", "Baseline", "Final"],
+        rows: [
+          ["Dielectric thickness (t_ox)", "2 nm", "2 nm"],
+          ["Doping concentration (N)", "1×10¹³", "1×10¹³"],
+          ["Gate work function", "4.2 eV", "4.5 eV"],
+          ["Interface charge (N_interface)", "−1×10¹¹", "−1×10¹²"],
+        ],
+      },
+      {
+        title: "Extracted Parameters — Baseline vs Final (Part 1)",
+        columns: ["Parameter", "Region", "Baseline", "Final", "Δ (Final − Base)"],
+        rows: [
+          ["V_T", "Linear (0.05 V)", "0.2817 V", "0.5951 V", "+0.3134 V"],
+          ["V_T", "Saturation (1.0 V)", "0.27195 V", "0.474299 V", "+0.2023 V"],
+          ["I_ON", "Linear (0.05 V)", "8.414×10⁻³ mA", "5.393×10⁻³ mA", "−3.021×10⁻³ mA"],
+          ["I_ON", "Saturation (1.0 V)", "3.419×10⁻² mA", "1.831×10⁻² mA", "−1.588×10⁻² mA"],
+          ["I_OFF", "Linear (0.05 V)", "8.914×10⁻⁷ mA", "4.021×10⁻¹⁰ mA", "−8.91×10⁻⁷ mA"],
+          ["I_OFF", "Saturation (1.0 V)", "2.608×10⁻⁵ mA", "2.897×10⁻⁸ mA", "−2.61×10⁻⁵ mA"],
+          ["SS", "Linear (0.05 V)", "95.78 mV/dec", "88.94 mV/dec", "−6.84 mV/dec"],
+          ["SS", "Saturation (1.0 V)", "136.64 mV/dec", "106.58 mV/dec", "−30.06 mV/dec"],
+          ["DIBL", "—", "129.86 mV/V", "145.11 mV/V", "+15.25 mV/V"],
+        ],
+      },
+      {
+        title: "Interface Traps — Analytical vs Simulation (Part 2)",
+        columns: ["Quantity", "Analytical", "Simulation"],
+        rows: [
+          ["V_T (linear, 0.05 V)", "≈ 0.866 V", "0.857 V"],
+          ["SS (linear, 0.05 V)", "≈ 165.5 mV/dec", "165.99 mV/dec"],
+        ],
+        note: "Computed using extracted doping N_A = 4.05×10¹⁸ cm⁻³ and the measured SiO₂/HfO₂ gate-stack capacitance.",
+      },
+    ],
+    carousels: [
+      {
+        title: "Part 1 — Id–Vg Characteristics (Work Function & Fixed Charge)",
+        images: [
+          { src: "/projects/finfet_sim/part1/base-lin-linear.png", caption: "Baseline · linear region (V_DS = 0.05 V) · linear current scale" },
+          { src: "/projects/finfet_sim/part1/base-lin-log.png", caption: "Baseline · linear region (V_DS = 0.05 V) · log current scale" },
+          { src: "/projects/finfet_sim/part1/base-sat-linear.png", caption: "Baseline · saturation region (V_DS = 1.0 V) · linear current scale" },
+          { src: "/projects/finfet_sim/part1/base-sat-log.png", caption: "Baseline · saturation region (V_DS = 1.0 V) · log current scale" },
+          { src: "/projects/finfet_sim/part1/final-lin-linear.png", caption: "Final · linear region (V_DS = 0.05 V) · linear current scale" },
+          { src: "/projects/finfet_sim/part1/final-lin-log.png", caption: "Final · linear region (V_DS = 0.05 V) · log current scale" },
+          { src: "/projects/finfet_sim/part1/final-sat-linear.png", caption: "Final · saturation region (V_DS = 1.0 V) · linear current scale" },
+          { src: "/projects/finfet_sim/part1/final-sat-log.png", caption: "Final · saturation region (V_DS = 1.0 V) · log current scale" },
+        ],
+      },
+      {
+        title: "Part 2 — Id–Vg Characteristics (Interface Traps)",
+        images: [
+          { src: "/projects/finfet_sim/part2/lin-linear.png", caption: "Interface traps · linear region (V_DS = 0.05 V) · linear current scale" },
+          { src: "/projects/finfet_sim/part2/lin-log.png", caption: "Interface traps · linear region (V_DS = 0.05 V) · log current scale" },
+          { src: "/projects/finfet_sim/part2/sat-linear.png", caption: "Interface traps · saturation region (V_DS = 1.0 V) · linear current scale" },
+          { src: "/projects/finfet_sim/part2/sat-log.png", caption: "Interface traps · saturation region (V_DS = 1.0 V) · log current scale" },
+        ],
       },
     ],
   },

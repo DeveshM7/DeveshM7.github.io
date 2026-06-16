@@ -7,6 +7,7 @@ import { GithubIcon } from "@/components/brand-icons"
 import { BackToProjects } from "@/components/back-to-projects"
 import { ProjectGallery, type GalleryGroup } from "@/components/project-gallery"
 import { SchematicFigure } from "@/components/schematic-figure"
+import { Carousel } from "@/components/carousel"
 import { Reveal } from "@/components/reveal"
 
 export function generateStaticParams() {
@@ -178,6 +179,62 @@ export default async function ProjectPage({
                   </Reveal>
                 )}
             </Fragment>
+          ))}
+
+          {/* Data tables */}
+          {project.tables?.map((table) => (
+            <Reveal key={table.title} delay={0.05}>
+              <section>
+                <h2 className="text-xl font-semibold text-[#f5f7fa]">{table.title}</h2>
+                <div className="mt-4 overflow-x-auto rounded-2xl border border-white/10">
+                  <table className="w-full border-collapse text-sm">
+                    <thead>
+                      <tr className="bg-white/[0.04]">
+                        {table.columns.map((col) => (
+                          <th
+                            key={col}
+                            className="whitespace-nowrap px-4 py-3 text-left font-semibold text-[#f5f7fa]"
+                          >
+                            {col}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {table.rows.map((row, ri) => (
+                        <tr key={ri} className="border-t border-white/10">
+                          {row.map((cell, ci) => (
+                            <td
+                              key={ci}
+                              className={`whitespace-nowrap px-4 py-3 ${
+                                ci === 0 ? "font-medium text-[#f5f7fa]" : "text-[#aeb6c2]"
+                              }`}
+                            >
+                              {cell}
+                            </td>
+                          ))}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {table.note && (
+                  <p className="mt-3 text-xs leading-snug text-[#aeb6c2]/70">{table.note}</p>
+                )}
+              </section>
+            </Reveal>
+          ))}
+
+          {/* Carousels — flip through related plots in place */}
+          {project.carousels?.map((carousel) => (
+            <Reveal key={carousel.title} delay={0.05}>
+              <section>
+                <h2 className="text-xl font-semibold text-[#f5f7fa]">{carousel.title}</h2>
+                <div className="mt-4">
+                  <Carousel images={carousel.images} />
+                </div>
+              </section>
+            </Reveal>
           ))}
 
           {/* Gallery — shown when there are images, or as a placeholder on template pages */}
