@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 760" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <marker id="s_ah" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7dd3fc"/></marker>
+  </defs>
+  <rect x="2" y="2" width="1596" height="756" rx="24" fill="#0d1014" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <text x="800" y="58" text-anchor="middle" font-size="24" fill="#cfd6e0" font-family="ui-monospace, Menlo, monospace">echo today is `date`</text>
+
+  <!-- parent shell -->
+  <rect x="80" y="110" width="560" height="540" rx="16" fill="#10151c" stroke="#7dd3fc" stroke-width="1.5"/>
+  <text x="110" y="152" font-size="23" fill="#7dd3fc">myshell (parent)</text>
+
+  <rect x="120" y="186" width="480" height="96" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="360" y="226" text-anchor="middle" font-size="20" fill="#f5f7fa">sees backtick arg</text>
+  <text x="360" y="256" text-anchor="middle" font-size="18" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">`date`</text>
+
+  <rect x="120" y="470" width="480" height="150" rx="12" fill="#16241c" stroke="#5ad19a"/>
+  <text x="360" y="516" text-anchor="middle" font-size="20" fill="#f5f7fa">splice output into argv</text>
+  <text x="360" y="550" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">split on whitespace</text>
+  <text x="360" y="588" text-anchor="middle" font-size="18" fill="#cfd6e0" font-family="ui-monospace, Menlo, monospace">echo today is Mon Jun 16 …</text>
+
+  <!-- child subshell -->
+  <rect x="960" y="180" width="560" height="400" rx="16" fill="#1d1a12" stroke="#f0b35b" stroke-width="1.5"/>
+  <text x="990" y="222" font-size="23" fill="#f0b35b">child — a new myshell</text>
+  <text x="990" y="252" font-size="17" fill="#c8a978" font-family="ui-monospace, Menlo, monospace">exec /proc/self/exe</text>
+  <rect x="1010" y="300" width="460" height="150" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="1240" y="356" text-anchor="middle" font-size="22" fill="#f5f7fa" font-family="ui-monospace, Menlo, monospace">date</text>
+  <text x="1240" y="392" text-anchor="middle" font-size="17" fill="#9aa4b2">runs the inner command</text>
+  <text x="1240" y="424" text-anchor="middle" font-size="16" fill="#9aa4b2">just like a top-level line</text>
+
+  <!-- pipes between -->
+  <line x1="604" y1="234" x2="1004" y2="234" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#s_ah)"/>
+  <text x="800" y="216" text-anchor="middle" font-size="18" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">write cmd → child stdin</text>
+  <text x="800" y="258" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">pipe pin[]</text>
+
+  <line x1="1004" y1="520" x2="604" y2="520" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#s_ah)"/>
+  <text x="800" y="502" text-anchor="middle" font-size="18" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">read child stdout → output</text>
+  <text x="800" y="544" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">pipe pout[]</text>
+
+  <!-- internal arrows -->
+  <line x1="360" y1="282" x2="360" y2="466" stroke="#6b7686" stroke-width="2" stroke-dasharray="5 6"/>
+  <line x1="1240" y1="252" x2="1240" y2="296" stroke="#6b7686" stroke-width="2" stroke-dasharray="5 6"/>
+
+  <text x="800" y="710" text-anchor="middle" font-size="18" fill="#9aa4b2">Command substitution forks a fresh instance of the shell, pipes the inner command to it, and captures its output back into the parent's argument list.</text>
+</svg>

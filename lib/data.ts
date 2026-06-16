@@ -508,7 +508,12 @@ export const projects: Project[] = [
       },
       {
         heading: "Lexing & Parsing",
-        body: "The command-line grammar is defined with Lex (tokenizer) and Yacc (parser). The lexer recognizes operators and special tokens — pipes, the redirection forms (>, >>, <, 2>, >&), background &, quotes, and control-flow keywords — while the Yacc grammar assembles them into a pipeline of commands with their arguments and I/O modifiers. This clean separation of tokenizing and grammar made it straightforward to extend the shell with new syntax.",
+        body: "The command-line grammar is defined with Lex (tokenizer) and Yacc (parser). The lexer recognizes operators and special tokens — pipes, the redirection forms (>, >>, <, 2>, >&), background &, quotes, and control-flow keywords — while the Yacc grammar assembles them into a command tree. The root is a ListCommands holding a sequence of commands, where each command is a PipeCommand, IfCommand, WhileCommand, or ForCommand; pipe stages become SimpleCommands, and a control-flow node nests an entire ListCommands as its body. The executor simply walks this tree.",
+        diagram: {
+          src: "/projects/shell/diagram-command-tree.svg",
+          alt: "Parse tree: a root ListCommands holds a PipeCommand (with SimpleCommand children and I/O) and a WhileCommand (with a condition SimpleCommand and a nested ListCommands body containing more SimpleCommands).",
+          caption: "The parser builds a command tree; control-flow nodes nest a whole ListCommands as their body.",
+        },
       },
       {
         heading: "Pipelines & I/O Redirection",
@@ -521,16 +526,39 @@ export const projects: Project[] = [
       },
       {
         heading: "Expansions",
-        body: "Before execution, arguments pass through several expansion passes that mirror real shell behavior: wildcard globbing (* and ?) against the filesystem, environment-variable substitution with ${VAR}, tilde (~) expansion to the home directory, and subshell / command substitution using backticks, where the output of an inner command is captured and spliced back into the outer command line.",
+        body: "Before a command runs, each argument is rewritten by three expansion passes applied in order. First, environment variables: ${VAR} is replaced from the environment, including special variables like ${?} (last exit status), ${$} (the shell's PID), ${!} (last background PID), and ${SHELL}. Next, command substitution: any backtick argument is run and replaced by its output. Finally, wildcards: arguments containing * or ? are matched against directory entries with a regex and expanded to the sorted list of matches. Tilde (~) is handled even earlier, by the lexer. Only after all of this is the final argv handed to exec().",
         diagram: {
           src: "/projects/shell/diagram-expansion.svg",
-          alt: "Argument expansion: ~/src/*.c is expanded by consulting $HOME (tilde) and the filesystem (wildcard glob), along with variable and subshell substitution, before the final argv is passed to exec().",
-          caption: "An argument is rewritten by consulting the environment and filesystem before exec() ever sees it.",
+          alt: "Expansion pipeline applied in order: variable substitution (${VAR}, $?, $!, $$) using the environment table, then command substitution from a nested myshell, then wildcard globbing against directory entries, producing the final argv passed to exec().",
+          caption: "The three expansion passes, in the order the code applies them: variables → subshell → wildcards.",
         },
       },
       {
-        heading: "Built-ins & Control Flow",
-        body: "Commands that must change the shell's own state are implemented as built-ins rather than external programs — cd, setenv, unsetenv, printenv, source (run commands from a file), and exit. On top of the basic command grammar, the shell also supports structured control flow — if / then / fi, while / do / done, and for / in / do / done — where conditions are evaluated as real commands and their exit status drives the branch, enabling small shell scripts to run directly.",
+        heading: "Subshells & Command Substitution",
+        body: "Backtick command substitution is implemented by running the inner command in a brand-new instance of the shell itself. The parent forks a child that re-execs the shell binary via /proc/self/exe, sets up two pipes, writes the inner command into the child's stdin, and reads everything the child prints back. That captured output is split on whitespace and spliced into the parent command's argument list — so `date` or `ls *.c` inside a command is replaced by its result before the outer command ever runs.",
+        diagram: {
+          src: "/projects/shell/diagram-subshell.svg",
+          alt: "Command substitution: the parent shell forks a child that re-execs the shell via /proc/self/exe; the parent pipes the inner command into the child's stdin and reads the child's stdout, then splits the output and splices it into the parent's argv.",
+          caption: "A backtick spawns a fresh shell instance, pipes the inner command to it, and captures its output back into the argument list.",
+        },
+      },
+      {
+        heading: "Control Flow & Loops",
+        body: "The shell supports if / then / fi, while / do / done, and for / in / do / done, each parsed into its own command node with a condition and a body. The condition is evaluated as a real command: the shell prepends test to it, forks, execs, and reads the exit status. if runs its body once when the status is zero; while re-evaluates the condition and repeats the body as long as it stays zero; for expands its value list (including wildcards), then runs the body once per value with the loop variable set via setenv. Because a body is itself a ListCommands, loops and conditionals nest arbitrarily.",
+        diagram: {
+          src: "/projects/shell/diagram-control-flow.svg",
+          alt: "Control flow: the condition is run through test via fork/execvp; if the exit status is 0 the body (a ListCommands) runs; while and for loop back to re-evaluate, for iterating its value list with setenv on each pass.",
+          caption: "Conditions are run as real commands; their exit status drives the branch, and while / for loop back to re-evaluate.",
+        },
+      },
+      {
+        heading: "Built-ins & Background Jobs",
+        body: "Most commands fork a child and exec the external program, but a few must run inside the shell process itself so they can change its state — cd, setenv, unsetenv, and exit are handled in-process before any fork (printenv runs in the child). Job control is handled at the fork boundary too: a foreground command is waitpid()ed so its exit status can be recorded (and surfaced via ${?}), while a command ending in & is left to run in the background — the prompt returns immediately and a SIGCHLD handler reaps the finished child later. Startup commands are read from a .shellrc file, and source runs commands from any file.",
+        diagram: {
+          src: "/projects/shell/diagram-builtins.svg",
+          alt: "Built-in commands (cd, setenv, unsetenv, exit) run in the shell process; other commands fork and execvp a child. Foreground jobs are waitpid()ed and record $?, while background jobs (&) return to the prompt and are reaped later by a SIGCHLD handler.",
+          caption: "Built-ins run in the shell so they can change its state; external commands fork, and background jobs are reaped by a SIGCHLD handler.",
+        },
       },
     ],
   },

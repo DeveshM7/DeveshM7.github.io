@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 700" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <marker id="b_ah" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7dd3fc"/></marker>
+  </defs>
+  <rect x="2" y="2" width="1596" height="696" rx="24" fill="#0d1014" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <text x="60" y="56" font-size="22" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">built-ins run in the shell itself; everything else forks a child</text>
+
+  <!-- command -->
+  <rect x="50" y="300" width="210" height="120" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="155" y="356" text-anchor="middle" font-size="22" fill="#f5f7fa">command</text>
+  <text x="155" y="386" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">expanded argv</text>
+
+  <line x1="260" y1="360" x2="316" y2="360" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+
+  <!-- built-in? -->
+  <rect x="320" y="300" width="240" height="120" rx="12" fill="#1a2330" stroke="#7dd3fc"/>
+  <text x="440" y="356" text-anchor="middle" font-size="22" fill="#f5f7fa">built-in?</text>
+  <text x="440" y="386" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">name match</text>
+
+  <!-- yes: in-shell -->
+  <line x1="440" y1="300" x2="440" y2="214" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+  <text x="462" y="262" font-size="16" fill="#5ad19a" font-family="ui-monospace, Menlo, monospace">yes</text>
+  <rect x="250" y="80" width="640" height="134" rx="12" fill="#16241c" stroke="#5ad19a"/>
+  <text x="570" y="122" text-anchor="middle" font-size="21" fill="#f5f7fa">runs in the shell process</text>
+  <text x="570" y="156" text-anchor="middle" font-size="18" fill="#cfd6e0" font-family="ui-monospace, Menlo, monospace">cd · setenv · unsetenv · exit</text>
+  <text x="570" y="188" text-anchor="middle" font-size="15" fill="#9aa4b2">must stay in-process to change the shell's cwd &amp; environment</text>
+
+  <!-- no: fork -->
+  <line x1="560" y1="360" x2="636" y2="360" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+  <text x="598" y="340" text-anchor="middle" font-size="16" fill="#f08a8a" font-family="ui-monospace, Menlo, monospace">no</text>
+  <rect x="640" y="300" width="280" height="120" rx="12" fill="#1d1a12" stroke="#f0b35b"/>
+  <text x="780" y="350" text-anchor="middle" font-size="21" fill="#f5f7fa">fork() + execvp()</text>
+  <text x="780" y="384" text-anchor="middle" font-size="16" fill="#c8a978">external program (child)</text>
+
+  <!-- background? -->
+  <line x1="920" y1="360" x2="996" y2="360" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+  <rect x="1000" y="300" width="240" height="120" rx="12" fill="#1a2330" stroke="#7dd3fc"/>
+  <text x="1120" y="356" text-anchor="middle" font-size="22" fill="#f5f7fa">background?</text>
+  <text x="1120" y="386" text-anchor="middle" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">trailing &amp;</text>
+
+  <!-- foreground -->
+  <line x1="1120" y1="300" x2="1120" y2="214" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+  <text x="1142" y="262" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">no</text>
+  <rect x="1300" y="160" width="250" height="110" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="1425" y="206" text-anchor="middle" font-size="20" fill="#f5f7fa">waitpid()</text>
+  <text x="1425" y="238" text-anchor="middle" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">record $?</text>
+  <line x1="1240" y1="330" x2="1296" y2="240" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+
+  <!-- background -->
+  <line x1="1120" y1="420" x2="1120" y2="506" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+  <text x="1142" y="470" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">yes</text>
+  <rect x="1300" y="450" width="250" height="120" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="1425" y="496" text-anchor="middle" font-size="20" fill="#f5f7fa">don't wait</text>
+  <text x="1425" y="528" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">SIGCHLD reaps later</text>
+  <text x="1425" y="552" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">prompt returns now</text>
+  <line x1="1240" y1="390" x2="1296" y2="490" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#b_ah)"/>
+</svg>

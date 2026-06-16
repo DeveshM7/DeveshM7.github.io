@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 780" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <marker id="c_ah" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7dd3fc"/></marker>
+  </defs>
+  <rect x="2" y="2" width="1596" height="776" rx="24" fill="#0d1014" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <text x="60" y="58" font-size="22" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">if · while · for — the condition is evaluated as a real command</text>
+
+  <!-- condition -->
+  <rect x="80" y="230" width="320" height="150" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="240" y="296" text-anchor="middle" font-size="23" fill="#f5f7fa">Condition</text>
+  <text x="240" y="330" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">while [ -f log ]</text>
+  <text x="240" y="356" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">SimpleCommand</text>
+
+  <!-- run test -->
+  <line x1="400" y1="305" x2="556" y2="305" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#c_ah)"/>
+  <text x="478" y="285" text-anchor="middle" font-size="16" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">prepend test</text>
+  <text x="478" y="332" text-anchor="middle" font-size="16" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">fork · execvp</text>
+
+  <!-- decision -->
+  <rect x="560" y="230" width="360" height="150" rx="12" fill="#1a2330" stroke="#7dd3fc"/>
+  <text x="740" y="296" text-anchor="middle" font-size="22" fill="#f5f7fa">exit status</text>
+  <text x="740" y="334" text-anchor="middle" font-size="20" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">== 0 ?</text>
+
+  <!-- yes -> body -->
+  <line x1="920" y1="305" x2="1056" y2="305" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#c_ah)"/>
+  <text x="988" y="285" text-anchor="middle" font-size="17" fill="#5ad19a" font-family="ui-monospace, Menlo, monospace">true</text>
+
+  <rect x="1060" y="230" width="360" height="150" rx="12" fill="#16241c" stroke="#5ad19a"/>
+  <text x="1240" y="290" text-anchor="middle" font-size="22" fill="#f5f7fa">Run body</text>
+  <text x="1240" y="326" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">ListCommands</text>
+  <text x="1240" y="352" text-anchor="middle" font-size="15" fill="#9aa4b2">(may nest more loops)</text>
+
+  <!-- no -> done -->
+  <line x1="740" y1="380" x2="740" y2="496" stroke="#7dd3fc" stroke-width="2.5" marker-end="url(#c_ah)"/>
+  <text x="762" y="445" font-size="17" fill="#f08a8a" font-family="ui-monospace, Menlo, monospace">false</text>
+  <rect x="560" y="500" width="360" height="100" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="740" y="552" text-anchor="middle" font-size="21" fill="#f5f7fa">done — skip / stop</text>
+
+  <!-- loop back -->
+  <polyline points="1240,380 1240,680 240,680 240,384" fill="none" stroke="#7dd3fc" stroke-width="2.5" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#c_ah)"/>
+  <text x="740" y="706" text-anchor="middle" font-size="18" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">while / for: re-evaluate and repeat</text>
+
+  <text x="1100" y="470" font-size="16" fill="#9aa4b2">if    → run body once, no loop-back</text>
+  <text x="1100" y="500" font-size="16" fill="#9aa4b2">while → repeat while status is 0</text>
+  <text x="1100" y="530" font-size="16" fill="#9aa4b2">for   → setenv loop var per value,</text>
+  <text x="1100" y="556" font-size="16" fill="#9aa4b2">          then run body</text>
+</svg>

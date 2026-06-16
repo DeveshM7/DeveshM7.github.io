@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 880" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <marker id="t_ah" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#6b7686"/></marker>
+  </defs>
+  <rect x="2" y="2" width="1596" height="876" rx="24" fill="#0d1014" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <text x="800" y="58" text-anchor="middle" font-size="22" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">sort &lt; in.txt | uniq ;  while [ -f log ] ; do echo hi ; done</text>
+
+  <!-- root -->
+  <rect x="600" y="92" width="400" height="92" rx="12" fill="#1a2330" stroke="#7dd3fc"/>
+  <text x="800" y="132" text-anchor="middle" font-size="24" fill="#f5f7fa">ListCommands</text>
+  <text x="800" y="162" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">ordered list of commands</text>
+
+  <!-- edges to children -->
+  <line x1="800" y1="184" x2="420" y2="276" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+  <line x1="800" y1="184" x2="1180" y2="276" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+
+  <!-- PipeCommand -->
+  <rect x="210" y="280" width="420" height="110" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="420" y="324" text-anchor="middle" font-size="23" fill="#f5f7fa">PipeCommand</text>
+  <text x="420" y="356" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">SimpleCommands + I/O (&lt; in.txt)</text>
+
+  <line x1="350" y1="390" x2="300" y2="476" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+  <line x1="490" y1="390" x2="540" y2="476" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+  <rect x="170" y="480" width="260" height="92" rx="12" fill="#12161c" stroke="#2a3340"/>
+  <text x="300" y="520" text-anchor="middle" font-size="21" fill="#cfd6e0">SimpleCommand</text>
+  <text x="300" y="548" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">sort</text>
+  <rect x="450" y="480" width="260" height="92" rx="12" fill="#12161c" stroke="#2a3340"/>
+  <text x="580" y="520" text-anchor="middle" font-size="21" fill="#cfd6e0">SimpleCommand</text>
+  <text x="580" y="548" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">uniq</text>
+
+  <!-- WhileCommand -->
+  <rect x="970" y="280" width="420" height="110" rx="12" fill="#161d26" stroke="#3a4554"/>
+  <text x="1180" y="324" text-anchor="middle" font-size="23" fill="#f5f7fa">WhileCommand</text>
+  <text x="1180" y="356" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">condition + body</text>
+
+  <line x1="1110" y1="390" x2="1050" y2="476" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+  <line x1="1250" y1="390" x2="1310" y2="476" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+  <rect x="910" y="480" width="280" height="92" rx="12" fill="#12161c" stroke="#2a3340"/>
+  <text x="1050" y="520" text-anchor="middle" font-size="20" fill="#cfd6e0">condition</text>
+  <text x="1050" y="548" text-anchor="middle" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">SimpleCommand · test</text>
+  <rect x="1210" y="480" width="280" height="92" rx="12" fill="#1a2330" stroke="#7dd3fc"/>
+  <text x="1350" y="520" text-anchor="middle" font-size="20" fill="#f5f7fa">body</text>
+  <text x="1350" y="548" text-anchor="middle" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">ListCommands (nested)</text>
+
+  <!-- nested body -->
+  <line x1="1350" y1="572" x2="1350" y2="662" stroke="#6b7686" stroke-width="2" marker-end="url(#t_ah)"/>
+  <rect x="1210" y="666" width="280" height="92" rx="12" fill="#12161c" stroke="#2a3340"/>
+  <text x="1350" y="706" text-anchor="middle" font-size="21" fill="#cfd6e0">SimpleCommand</text>
+  <text x="1350" y="734" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">echo hi</text>
+
+  <text x="800" y="820" text-anchor="middle" font-size="18" fill="#9aa4b2">The parser builds this tree as it reduces; the executor walks it. Control-flow nodes nest a whole ListCommands as their body.</text>
+</svg>
