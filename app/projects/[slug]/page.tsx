@@ -8,7 +8,6 @@ import { BackToProjects } from "@/components/back-to-projects"
 import { ProjectGallery, type GalleryGroup } from "@/components/project-gallery"
 import { SchematicFigure } from "@/components/schematic-figure"
 import { Carousel } from "@/components/carousel"
-import { FlowDiagram } from "@/components/flow-diagram"
 import { Reveal } from "@/components/reveal"
 
 export function generateStaticParams() {
@@ -179,12 +178,19 @@ export default async function ProjectPage({
                   <h2 className="text-xl font-semibold text-[#f5f7fa]">{section.heading}</h2>
                   <p className="mt-3 leading-relaxed text-[#aeb6c2]">{section.body}</p>
                   {section.diagram && (
-                    <div className="mt-5">
-                      <FlowDiagram
-                        steps={section.diagram.steps}
-                        caption={section.diagram.caption}
+                    <figure className="mt-5">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={section.diagram.src}
+                        alt={section.diagram.alt}
+                        className="w-full rounded-2xl"
                       />
-                    </div>
+                      {section.diagram.caption && (
+                        <figcaption className="mt-3 text-center text-xs leading-snug text-[#aeb6c2]/70">
+                          {section.diagram.caption}
+                        </figcaption>
+                      )}
+                    </figure>
                   )}
                 </section>
               </Reveal>

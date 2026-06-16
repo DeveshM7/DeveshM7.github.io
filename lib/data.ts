@@ -135,14 +135,11 @@ export type Project = {
   /* Wide image shown at the top of the detail page (e.g. a schematic) */
   schematic?: string
   /* Write-up rendered as titled sections on the detail page.
-     A section may carry a flow diagram rendered below its text. */
+     A section may carry a system diagram image rendered below its text. */
   sections?: {
     heading: string
     body: string
-    diagram?: {
-      caption?: string
-      steps: { label: string; sub?: string; arrow?: string }[]
-    }
+    diagram?: { src: string; alt: string; caption?: string }
   }[]
   /* Photo gallery rendered below the write-up */
   gallery?: { src: string; caption: string }[]
@@ -498,19 +495,15 @@ export const projects: Project[] = [
     tags: ["C", "C++", "Lex/Yacc", "Linux", "Systems", "Processes"],
     image: "/projects/shell/preview.svg",
     github: "https://github.com/DeveshM7/custom-shell",
+    youtube: "es-CDSJ1ATQ",
     sections: [
       {
         heading: "Overview",
         body: "This project is a fully functional Unix-like command shell built from scratch in C/C++. It reads command lines, parses them into a structured command representation, and executes them by managing real processes — forking children, wiring up pipes and file descriptors, and waiting on or backgrounding jobs. The result behaves like a real shell: it runs programs with arguments, chains them with pipes, redirects input and output, expands wildcards and variables, and supports shell-level control flow.",
         diagram: {
-          caption: "The lifecycle of a command line, from raw text to running processes.",
-          steps: [
-            { label: "Command line", sub: "raw text" },
-            { label: "Lexer", sub: "Flex", arrow: "scan" },
-            { label: "Parser", sub: "Yacc", arrow: "tokens" },
-            { label: "Command tree", sub: "pipeline + I/O", arrow: "build" },
-            { label: "Executor", sub: "fork · exec · wait", arrow: "run" },
-          ],
+          src: "/projects/shell/diagram-architecture.svg",
+          alt: "Architecture: the terminal sends a command line to the shell process, which lexes (Flex), parses (Yacc), builds a command tree, and executes it via kernel system calls that fork child processes.",
+          caption: "How a command line flows through the shell and into the kernel that runs the child processes.",
         },
       },
       {
@@ -521,28 +514,18 @@ export const projects: Project[] = [
         heading: "Pipelines & I/O Redirection",
         body: "Each command stage is executed in its own forked process, with the parent connecting stages through pipes so the output of one feeds the input of the next. Redirection operators rewire a process's standard input, output, and error to files before exec — including append mode, separate or combined stderr, and reading from a file — and a trailing & runs the whole pipeline in the background instead of blocking the prompt.",
         diagram: {
-          caption: "Running ls -al | grep .c | wc -l: each stage is a forked child, and the parent connects each one's stdout to the next one's stdin with a pipe (dup2).",
-          steps: [
-            { label: "ls -al", sub: "child 1" },
-            { label: "grep .c", sub: "child 2", arrow: "pipe" },
-            { label: "wc -l", sub: "child 3", arrow: "pipe" },
-            { label: "terminal", sub: "stdout", arrow: "out" },
-          ],
+          src: "/projects/shell/diagram-pipeline.svg",
+          alt: "Process model for ls -al | grep .c | wc -l: the parent shell forks one child per stage and connects each child's stdout (fd 1) to the next child's stdin (fd 0) through kernel pipes using dup2; the last stage writes to the terminal.",
+          caption: "Process & pipe model for ls -al | grep .c | wc -l — one forked child per stage, wired together by kernel pipes.",
         },
       },
       {
         heading: "Expansions",
         body: "Before execution, arguments pass through several expansion passes that mirror real shell behavior: wildcard globbing (* and ?) against the filesystem, environment-variable substitution with ${VAR}, tilde (~) expansion to the home directory, and subshell / command substitution using backticks, where the output of an inner command is captured and spliced back into the outer command line.",
         diagram: {
-          caption: "Each raw argument flows through the expansion passes before the final argv is handed to exec().",
-          steps: [
-            { label: "Raw tokens" },
-            { label: "Wildcards", sub: "* ?", arrow: "glob" },
-            { label: "Variables", sub: "${VAR}", arrow: "expand" },
-            { label: "Tilde", sub: "~ → home", arrow: "expand" },
-            { label: "Subshell", sub: "` `", arrow: "substitute" },
-            { label: "exec()", sub: "final argv", arrow: "run" },
-          ],
+          src: "/projects/shell/diagram-expansion.svg",
+          alt: "Argument expansion: ~/src/*.c is expanded by consulting $HOME (tilde) and the filesystem (wildcard glob), along with variable and subshell substitution, before the final argv is passed to exec().",
+          caption: "An argument is rewritten by consulting the environment and filesystem before exec() ever sees it.",
         },
       },
       {
