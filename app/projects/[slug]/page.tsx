@@ -75,7 +75,12 @@ export default async function ProjectPage({
       />
     </div>
   ) : project.video ? (
-    <video controls playsInline preload="metadata" className="h-auto w-full">
+    <video
+      controls
+      playsInline
+      preload="metadata"
+      className="mx-auto max-h-[78vh] w-auto max-w-full"
+    >
       <source src={project.video} type="video/mp4" />
       Your browser does not support the video tag.
     </video>
@@ -182,7 +187,7 @@ export default async function ProjectPage({
         )}
         {videoTop && (
           <Reveal delay={0.1}>
-            <div className="mt-10 overflow-hidden rounded-2xl border border-white/10 bg-black">
+            <div className="mt-10 flex justify-center overflow-hidden rounded-2xl border border-white/10 bg-black">
               {videoEl}
             </div>
           </Reveal>
@@ -316,7 +321,7 @@ export default async function ProjectPage({
                 <h2 className="text-xl font-semibold text-[#f5f7fa]">
                   {project.videoLabel ?? "Demo"}
                 </h2>
-                <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-black">
+                <div className="mt-4 flex justify-center overflow-hidden rounded-2xl border border-white/10 bg-black">
                   {videoEl}
                 </div>
               </section>
