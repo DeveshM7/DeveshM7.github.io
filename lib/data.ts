@@ -611,33 +611,6 @@ export const projects: Project[] = [
       },
     ],
   },
-  {
-    slug: "autonomous-motorsports-purdue",
-    title: "Autonomous Motorsports Purdue",
-    category: "Computer Vision Project",
-    description:
-      "Used MobileSAM CNN models to detect track boundaries and segment images on-device, improving autonomous navigation and perception.",
-    tags: ["Computer Vision", "MobileSAM", "ZED Camera", "Robotics", "Real-Time Systems"],
-    image: "/projects/autonomous-motorsports.png",
-  },
-  {
-    slug: "embedeval",
-    title: "EmbedEval",
-    category: "Embedded LLM Benchmarking Research",
-    description:
-      "Building an automated benchmark workflow with Zephyr RTOS and Renode to evaluate LLM-generated firmware on MCU-style embedded tasks.",
-    tags: ["LLMs", "Embedded Systems", "Zephyr", "Renode", "Benchmarking"],
-    image: "/projects/embedeval.png",
-  },
-  {
-    slug: "ai-workflow-automation",
-    title: "AI Workflow Automation",
-    category: "StudioX-AI Internship Project",
-    description:
-      "Created AI workflows for DevOps and customer support, integrating GitLab, Docker APIs, Claude, and YAML-based automation.",
-    tags: ["AI Agents", "Claude", "GitLab", "Docker", "YAML"],
-    image: "/projects/ai-workflow.png",
-  },
 ]
 
 export function getProject(slug: string): Project | undefined {
