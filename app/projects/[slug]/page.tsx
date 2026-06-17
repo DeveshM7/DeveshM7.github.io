@@ -118,7 +118,7 @@ export default async function ProjectPage({
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#7dd3fc]/40 bg-[#7dd3fc]/10 px-5 py-2.5 text-sm font-semibold text-[#7dd3fc] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/70 hover:bg-[#7dd3fc]/20 hover:shadow-[0_0_22px_rgba(125,211,252,0.18)]"
                 >
                   <GithubIcon className="h-4 w-4" />
                   View on GitHub
@@ -129,7 +129,7 @@ export default async function ProjectPage({
                   href={project.report}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
+                  className="inline-flex items-center gap-2 rounded-full border border-[#7dd3fc]/40 bg-[#7dd3fc]/10 px-5 py-2.5 text-sm font-semibold text-[#7dd3fc] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/70 hover:bg-[#7dd3fc]/20 hover:shadow-[0_0_22px_rgba(125,211,252,0.18)]"
                 >
                   <FileText className="h-4 w-4" />
                   Read full report (PDF)
