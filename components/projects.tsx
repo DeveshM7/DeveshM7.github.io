@@ -37,7 +37,7 @@ export function Projects() {
         <SectionHeading
           eyebrow="Selected Work"
           title="Featured Projects"
-          description="A range of systems work — from FPGA hardware and compilers to computer vision and embedded LLM research."
+          description="A range of low-level systems and hardware work — from embedded firmware and FPGA design to analog circuits, compilers, and semiconductor device simulation."
         />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
