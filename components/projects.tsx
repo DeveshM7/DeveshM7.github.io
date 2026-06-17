@@ -8,6 +8,26 @@ import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/reveal"
 import { projects } from "@/lib/data"
 
+// Display order of the project tiles (left→right, top→bottom).
+const tileOrder = [
+  "gesture-controlled-game",
+  "advanced-custom-bash-shell",
+  "heart-rate-sensor",
+  "audio-equalizer",
+  "lunar-lander-game",
+  "electric-piano",
+  "simple-c-compiler",
+  "finfet-tcad-simulation",
+]
+
+const orderedProjects = [
+  ...tileOrder
+    .map((slug) => projects.find((p) => p.slug === slug))
+    .filter((p): p is (typeof projects)[number] => Boolean(p)),
+  // Append any projects not listed above so none are ever dropped.
+  ...projects.filter((p) => !tileOrder.includes(p.slug)),
+]
+
 export function Projects() {
   const reduce = useReducedMotion()
 
@@ -21,7 +41,7 @@ export function Projects() {
         />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, i) => (
+          {orderedProjects.map((project, i) => (
             <Reveal as="article" key={project.slug} delay={(i % 3) * 0.08}>
               <motion.div
                 whileHover={reduce ? undefined : { y: -6 }}
@@ -36,7 +56,9 @@ export function Projects() {
                       alt={`${project.title} preview`}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      className={`transition-transform duration-700 ease-out group-hover:scale-105 ${
+                        project.image.endsWith(".svg") ? "object-contain" : "object-cover"
+                      }`}
                     />
                     <div className="absolute inset-x-0 bottom-0 h-px scale-x-0 bg-[#7dd3fc] transition-transform duration-500 group-hover:scale-x-100" />
                   </div>

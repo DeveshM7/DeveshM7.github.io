@@ -571,7 +571,7 @@ export const projects: Project[] = [
     description:
       "A compiler for a subset of C, built with Lex and Yacc, that lexes and parses source code, tracks declarations in a symbol table, and emits working x86-64 assembly with control flow and function support.",
     tags: ["C", "x86-64", "Compilers", "Flex/Bison", "Code Generation", "Assembly"],
-    image: "/projects/c-compiler.png",
+    image: "/projects/scc/diagram-compiler.svg",
     github: "https://github.com/DeveshM7/simple-c-compiler",
     youtube: "jnze3tChm-Q",
     videoLabel: "Demo",
