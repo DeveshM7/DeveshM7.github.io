@@ -7,7 +7,7 @@ import { FileText, ArrowRight } from "lucide-react"
 
 export function Research() {
   return (
-    <section id="research" className="bg-[#e6eaf0] px-4 py-24 sm:px-6">
+    <section id="research" className="bg-[#e6eaf0] px-4 pt-16 pb-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#0b0d10]/50">

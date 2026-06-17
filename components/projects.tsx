@@ -32,7 +32,7 @@ export function Projects() {
   const reduce = useReducedMotion()
 
   return (
-    <section id="projects" className="bg-[#e6eaf0] px-4 py-24 sm:px-6">
+    <section id="projects" className="bg-[#e6eaf0] px-4 pt-24 pb-16 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Selected Work"
