@@ -11,10 +11,10 @@ export function Research() {
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#0b0d10]/50">
-            Research
+            Academia
           </p>
           <h2 className="mb-10 text-balance text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">
-            Published research
+            Research
           </h2>
         </Reveal>
 
