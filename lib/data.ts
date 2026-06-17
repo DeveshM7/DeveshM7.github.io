@@ -621,12 +621,32 @@ export function getProject(slug: string): Project | undefined {
 /*  RESEARCH                                                           */
 /* ------------------------------------------------------------------ */
 export const research = {
-  title: "Embedded LLM Benchmarking Researcher — Purdue University",
-  date: "Jan 2026 – Present",
-  bullets: [
-    "Building an automated benchmark workflow with Zephyr RTOS and Renode to evaluate LLM-generated firmware on MCU-style tasks.",
-    "Curating embedded software tasks from real PRs and bug-fix workflows.",
-    "Designing validation harnesses with automated tests, pass/fail checks, and reproducible logs.",
-    "Tracking correctness, latency, and memory usage to compare model performance on low-level embedded tasks.",
+  slug: "embedeval",
+  title: "EmbedEval: Benchmarking LLMs for Embedded Software Engineering",
+  venue: "Undergraduate Research · Purdue University ECE",
+  date: "2025–26",
+  role: "Team Lead",
+  authors: [
+    "Rishi Mantri",
+    "Devesh Maheshwari",
+    "Ayush Bansal",
+    "Aanya Mittal",
+    "Alan Hsi",
   ],
+  summary:
+    "A benchmarking framework that evaluates large language models on real embedded software engineering tasks — bug fixes, feature additions, and driver changes drawn from actual pull requests in RTOS projects (Zephyr, NuttX, RIOT). LLM coding agents resolve each task and their patches are validated in hardware simulators, with no physical hardware required — establishing a reproducible baseline for embedded code generation.",
+  stats: [
+    { value: "17", label: "real-PR tasks" },
+    { value: "5", label: "frontier models" },
+    { value: "3", label: "RTOS repos" },
+    { value: "70.6%", label: "top pass rate" },
+  ],
+  highlight: {
+    src: "/research/embedeval/embedeval_vs_swebench.png",
+    alt: "Bar chart comparing each model's EmbedEval pass rate against its SWE-bench Verified score; every model scores lower on EmbedEval, with open-weight models dropping the most.",
+    caption:
+      "The headline result: every model scores lower on EmbedEval than on SWE-bench Verified — and weaker models drop the most, exposing gaps that general benchmarks miss.",
+  },
+  pdf: "/research/embedeval/report.pdf",
+  href: "/research",
 }
