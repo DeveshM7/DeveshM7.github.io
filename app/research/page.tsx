@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, FileText } from "lucide-react"
 import { research } from "@/lib/data"
+import { GithubIcon } from "@/components/brand-icons"
 import { Reveal } from "@/components/reveal"
 
 export const metadata = {
@@ -121,15 +122,26 @@ export default function ResearchPage() {
           <p className="mt-5 max-w-2xl text-pretty leading-relaxed text-[#aeb6c2]">
             {research.summary}
           </p>
-          <a
-            href={research.pdf}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 rounded-full border border-[#7dd3fc]/40 bg-[#7dd3fc]/10 px-5 py-2.5 text-sm font-semibold text-[#7dd3fc] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/70 hover:bg-[#7dd3fc]/20 hover:shadow-[0_0_22px_rgba(125,211,252,0.18)]"
-          >
-            <FileText className="h-4 w-4" />
-            Read the full paper (PDF)
-          </a>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <a
+              href={research.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-[#7dd3fc]/40 bg-[#7dd3fc]/10 px-5 py-2.5 text-sm font-semibold text-[#7dd3fc] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/70 hover:bg-[#7dd3fc]/20 hover:shadow-[0_0_22px_rgba(125,211,252,0.18)]"
+            >
+              <FileText className="h-4 w-4" />
+              Read the full paper (PDF)
+            </a>
+            <a
+              href={research.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
+            >
+              <GithubIcon className="h-4 w-4" />
+              View on GitHub
+            </a>
+          </div>
         </Reveal>
 
         <div className="mt-14 flex flex-col gap-12">

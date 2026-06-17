@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Reveal } from "@/components/reveal"
 import { research } from "@/lib/data"
+import { GithubIcon } from "@/components/brand-icons"
 import { FileText, ArrowRight } from "lucide-react"
 
 export function Research() {
@@ -99,6 +100,15 @@ export function Research() {
                   >
                     <FileText className="h-4 w-4" />
                     Paper (PDF)
+                  </a>
+                  <a
+                    href={research.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-medium text-[#f5f7fa] transition-all hover:-translate-y-0.5 hover:border-[#7dd3fc]/50"
+                  >
+                    <GithubIcon className="h-4 w-4" />
+                    Code
                   </a>
                 </div>
               </div>

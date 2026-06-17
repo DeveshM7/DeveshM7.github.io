@@ -648,5 +648,6 @@ export const research = {
       "The headline result: every model scores lower on EmbedEval than on SWE-bench Verified — and weaker models drop the most, exposing gaps that general benchmarks miss.",
   },
   pdf: "/research/embedeval/report.pdf",
+  github: "https://github.com/rishimantri795/EmbedEval",
   href: "/research",
 }
