@@ -139,6 +139,25 @@ export default async function ProjectPage({
           )}
         </Reveal>
 
+        {/* System diagram pinned to the very top */}
+        {project.topDiagram && (
+          <Reveal delay={0.1}>
+            <figure className="mt-10">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={project.topDiagram.src}
+                alt={project.topDiagram.alt}
+                className="w-full rounded-2xl"
+              />
+              {project.topDiagram.caption && (
+                <figcaption className="mt-3 text-center text-xs leading-snug text-[#aeb6c2]/70">
+                  {project.topDiagram.caption}
+                </figcaption>
+              )}
+            </figure>
+          </Reveal>
+        )}
+
         {/* Top media — schematic, a generic hero, or a top-positioned demo video */}
         {showTopSchematic && (
           <Reveal delay={0.1}>

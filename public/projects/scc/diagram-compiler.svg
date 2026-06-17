@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 860" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <marker id="c_ah" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#7dd3fc"/></marker>
+    <marker id="c_ahm" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#6b7686"/></marker>
+  </defs>
+  <rect x="2" y="2" width="1596" height="856" rx="24" fill="#0d1014" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <text x="50" y="58" font-size="22" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">scc — a subset of C compiled to x86-64 assembly</text>
+
+  <!-- pipeline row -->
+  <g>
+    <rect x="50" y="110" width="220" height="150" rx="12" fill="#161d26" stroke="#3a4554"/>
+    <text x="160" y="178" text-anchor="middle" font-size="23" fill="#f5f7fa" font-family="ui-monospace, Menlo, monospace">source.c</text>
+    <text x="160" y="212" text-anchor="middle" font-size="16" fill="#9aa4b2">subset of C</text>
+
+    <rect x="310" y="110" width="220" height="150" rx="12" fill="#161d26" stroke="#3a4554"/>
+    <text x="420" y="178" text-anchor="middle" font-size="23" fill="#f5f7fa">Lexer</text>
+    <text x="420" y="212" text-anchor="middle" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">Flex</text>
+
+    <rect x="570" y="110" width="220" height="150" rx="12" fill="#1a2330" stroke="#7dd3fc"/>
+    <text x="680" y="170" text-anchor="middle" font-size="23" fill="#f5f7fa">Parser</text>
+    <text x="680" y="200" text-anchor="middle" font-size="16" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">Yacc</text>
+    <text x="680" y="226" text-anchor="middle" font-size="15" fill="#9aa4b2">emits asm as it parses</text>
+
+    <rect x="830" y="110" width="220" height="150" rx="12" fill="#161d26" stroke="#3a4554"/>
+    <text x="940" y="178" text-anchor="middle" font-size="23" fill="#f5f7fa" font-family="ui-monospace, Menlo, monospace">prog.s</text>
+    <text x="940" y="212" text-anchor="middle" font-size="16" fill="#9aa4b2">x86-64 · AT&amp;T</text>
+
+    <rect x="1090" y="110" width="220" height="150" rx="12" fill="#161d26" stroke="#3a4554"/>
+    <text x="1200" y="178" text-anchor="middle" font-size="23" fill="#f5f7fa" font-family="ui-monospace, Menlo, monospace">gcc</text>
+    <text x="1200" y="212" text-anchor="middle" font-size="16" fill="#9aa4b2">assemble + link</text>
+
+    <rect x="1350" y="110" width="200" height="150" rx="12" fill="#16241c" stroke="#5ad19a"/>
+    <text x="1450" y="178" text-anchor="middle" font-size="23" fill="#f5f7fa" font-family="ui-monospace, Menlo, monospace">a.out</text>
+    <text x="1450" y="212" text-anchor="middle" font-size="16" fill="#9aa4b2">native binary</text>
+
+    <g stroke="#7dd3fc" stroke-width="2.5">
+      <line x1="270" y1="185" x2="306" y2="185" marker-end="url(#c_ah)"/>
+      <line x1="530" y1="185" x2="566" y2="185" marker-end="url(#c_ah)"/>
+      <line x1="790" y1="185" x2="826" y2="185" marker-end="url(#c_ah)"/>
+      <line x1="1050" y1="185" x2="1086" y2="185" marker-end="url(#c_ah)"/>
+      <line x1="1310" y1="185" x2="1346" y2="185" marker-end="url(#c_ah)"/>
+    </g>
+    <text x="450" y="100" text-anchor="middle" font-size="15" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">tokens</text>
+    <text x="810" y="100" text-anchor="middle" font-size="15" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">emits .s</text>
+  </g>
+
+  <!-- connector to codegen panel -->
+  <line x1="680" y1="260" x2="680" y2="344" stroke="#6b7686" stroke-width="2.5" stroke-dasharray="5 6" marker-end="url(#c_ahm)"/>
+
+  <!-- codegen panel -->
+  <rect x="120" y="348" width="1360" height="468" rx="16" fill="#10151c" stroke="#7dd3fc" stroke-opacity="0.5" stroke-dasharray="7 6"/>
+  <text x="152" y="390" font-size="21" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">code generation — emitted as the grammar reduces (single pass · no AST/IR)</text>
+
+  <!-- register stack machine -->
+  <text x="152" y="440" font-size="20" fill="#f5f7fa">Register stack machine</text>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="20">
+    <rect x="152" y="456" width="130" height="58" rx="8" fill="#161d26" stroke="#3a4554"/><text x="217" y="493" text-anchor="middle" fill="#cfd6e0">rbx</text>
+    <rect x="294" y="456" width="130" height="58" rx="8" fill="#161d26" stroke="#3a4554"/><text x="359" y="493" text-anchor="middle" fill="#cfd6e0">r10</text>
+    <rect x="436" y="456" width="130" height="58" rx="8" fill="#161d26" stroke="#3a4554"/><text x="501" y="493" text-anchor="middle" fill="#cfd6e0">r13</text>
+    <rect x="578" y="456" width="130" height="58" rx="8" fill="#161d26" stroke="#3a4554"/><text x="643" y="493" text-anchor="middle" fill="#cfd6e0">r14</text>
+    <rect x="720" y="456" width="130" height="58" rx="8" fill="#161d26" stroke="#3a4554"/><text x="785" y="493" text-anchor="middle" fill="#cfd6e0">r15</text>
+  </g>
+  <text x="880" y="480" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">top → grows right</text>
+  <text x="880" y="506" font-size="16" fill="#9aa4b2">primaries push · operators pop 2, push 1</text>
+
+  <!-- symbol tables -->
+  <text x="152" y="572" font-size="20" fill="#f5f7fa">Symbol tables</text>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="17">
+    <rect x="152" y="588" width="330" height="56" rx="28" fill="#161d26" stroke="#3a4554"/><text x="317" y="623" text-anchor="middle" fill="#cfd6e0">globals → .comm / .data</text>
+    <rect x="500" y="588" width="330" height="56" rx="28" fill="#161d26" stroke="#3a4554"/><text x="665" y="623" text-anchor="middle" fill="#cfd6e0">locals → -8(%rbp)</text>
+    <rect x="848" y="588" width="330" height="56" rx="28" fill="#161d26" stroke="#3a4554"/><text x="1013" y="623" text-anchor="middle" fill="#cfd6e0">strings → .data</text>
+  </g>
+
+  <!-- calling convention -->
+  <text x="152" y="704" font-size="20" fill="#f5f7fa">Calling convention (System V)</text>
+  <g font-family="ui-monospace, Menlo, monospace" font-size="18">
+    <rect x="152" y="720" width="96" height="54" rx="8" fill="#161d26" stroke="#3a4554"/><text x="200" y="755" text-anchor="middle" fill="#cfd6e0">rdi</text>
+    <rect x="260" y="720" width="96" height="54" rx="8" fill="#161d26" stroke="#3a4554"/><text x="308" y="755" text-anchor="middle" fill="#cfd6e0">rsi</text>
+    <rect x="368" y="720" width="96" height="54" rx="8" fill="#161d26" stroke="#3a4554"/><text x="416" y="755" text-anchor="middle" fill="#cfd6e0">rdx</text>
+    <rect x="476" y="720" width="96" height="54" rx="8" fill="#161d26" stroke="#3a4554"/><text x="524" y="755" text-anchor="middle" fill="#cfd6e0">rcx</text>
+    <rect x="584" y="720" width="96" height="54" rx="8" fill="#161d26" stroke="#3a4554"/><text x="632" y="755" text-anchor="middle" fill="#cfd6e0">r8</text>
+    <rect x="692" y="720" width="96" height="54" rx="8" fill="#161d26" stroke="#3a4554"/><text x="740" y="755" text-anchor="middle" fill="#cfd6e0">r9</text>
+  </g>
+  <text x="820" y="754" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">args in registers · return in %rax</text>
+</svg>

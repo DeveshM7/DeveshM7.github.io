@@ -134,6 +134,8 @@ export type Project = {
   github?: string
   /* Wide image shown at the top of the detail page (e.g. a schematic) */
   schematic?: string
+  /* Dark system diagram shown full-width at the very top (no white card) */
+  topDiagram?: { src: string; alt: string; caption?: string }
   /* Write-up rendered as titled sections on the detail page.
      A section may carry a system diagram image rendered below its text. */
   sections?: {
@@ -568,25 +570,44 @@ export const projects: Project[] = [
     category: "Compiler Design Project",
     description:
       "A compiler for a subset of C, built with Lex and Yacc, that lexes and parses source code, tracks declarations in a symbol table, and emits working x86-64 assembly with control flow and function support.",
-    tags: ["C", "x86-64", "Compilers", "Parsing", "Symbol Tables", "Code Generation"],
+    tags: ["C", "x86-64", "Compilers", "Flex/Bison", "Code Generation", "Assembly"],
     image: "/projects/c-compiler.png",
     github: "https://github.com/DeveshM7/simple-c-compiler",
+    youtube: "jnze3tChm-Q",
+    videoLabel: "Demo",
+    topDiagram: {
+      src: "/projects/scc/diagram-compiler.svg",
+      alt: "Compiler pipeline: source.c → Flex lexer (tokens) → Yacc parser that emits x86-64 assembly as it reduces → prog.s → gcc assembles and links → a.out. The code generator uses a register stack machine (rbx, r10, r13, r14, r15), symbol tables for globals/locals/strings, and the System V calling convention (rdi…r9, return in rax).",
+      caption: "End-to-end pipeline. The parser emits assembly directly as it reduces — using a register stack machine, symbol tables, and the System V calling convention.",
+    },
     sections: [
       {
         heading: "Overview",
-        body: "This project is a compiler for a subset of the C language that takes source code all the way down to executable x86-64 assembly. It implements the core stages of a real compiler pipeline — lexical analysis, parsing, semantic tracking through a symbol table, and code generation — turning a high-level program into low-level instructions that run on the machine. The focus was on understanding how language constructs map onto registers, the stack, and control-flow at the assembly level.",
+        body: "scc is a single-pass compiler for a subset of C that translates source straight into x86-64 assembly (AT&T syntax, System V ABI). It's a classic syntax-directed translator: there is no separate AST or intermediate representation — the code generator emits assembly directly inside the Yacc grammar actions as each rule reduces. The emitted .s file is then assembled and linked with gcc into a native executable. The subset is rich enough to write real programs — the test suite includes bubble sort, quicksort, recursion, and an N-Queens solver.",
       },
       {
         heading: "Lexing & Parsing",
-        body: "The front end uses Lex to tokenize the source into keywords, identifiers, literals, and operators, and a Yacc grammar to parse those tokens into the language's syntactic structure. The grammar encodes operator precedence and the rules for declarations, expressions, statements, and function definitions, rejecting malformed programs while building up the structure the later stages compile.",
+        body: "A Flex lexer turns the source into tokens — type keywords (long, long*, char*, char**, void), control-flow keywords, identifiers, integer and string literals, and the full operator set. A Yacc grammar then encodes C's precedence levels as a chain of rules (logical-or → logical-and → equality → relational → additive → multiplicative → primary), so expressions parse with correct associativity and precedence. Because translation is syntax-directed, each grammar rule carries an action that prints the corresponding assembly the moment it reduces.",
       },
       {
-        heading: "Symbol Tables & Semantics",
-        body: "As declarations are parsed, the compiler records them in a symbol table that tracks identifiers along with the information needed for code generation — such as type and storage location. This lets the compiler resolve variable references, assign stack offsets, and distinguish scopes so that generated code reads and writes the correct locations.",
+        heading: "Expression Code Generation",
+        body: "Expressions are compiled onto a register stack machine. Five callee-saved registers — rbx, r10, r13, r14, r15 — act as an operand stack with a top pointer: a primary (a constant, variable, string, or call result) pushes its value into the next register, while a binary operator consumes the top two registers and writes its result back, popping one. Arithmetic maps to addq/subq/imulq and idivq (with rax/rdx for quotient and remainder), comparisons emit cmpq plus setcc, and logical operators use orq/andq. This keeps codegen simple and avoids touching memory for intermediate results.",
       },
       {
-        heading: "x86-64 Code Generation",
-        body: "The back end walks the parsed program and emits x86-64 assembly. Expressions are lowered into register and stack operations, control-flow constructs (conditionals and loops) are translated using labels and conditional jumps, and functions are implemented with proper prologues, epilogues, and calling-convention handling for arguments and return values — producing assembly that can be assembled and run.",
+        heading: "Variables, Arrays & Symbol Tables",
+        body: "Three symbol tables track storage. Globals are emitted as .comm in the .data section and referenced by name; locals (and function parameters) live in the stack frame at -8(%rbp) offsets recorded by declaration order; string literals are collected during parsing and emitted as a labeled .data block at the end. Array indexing computes the element address — scaling the index by 8 for long arrays versus byte access for char arrays, tracked by each symbol's type — and the address-of operator uses leaq on the frame slot.",
+      },
+      {
+        heading: "Functions & Calling Convention",
+        body: "Each function emits a .globl label, a prologue (save the frame pointer, reserve stack space, push the callee-saved registers with one extra push to keep the stack 16-byte aligned), and a matching epilogue on return. Incoming parameters are copied from the System V argument registers (rdi, rsi, rdx, rcx, r8, r9) into the frame; calls marshal arguments back into those registers, special-case printf's variadic ABI (zeroing eax), invoke call, and read the result from rax. return moves its value into rax and runs the epilogue.",
+      },
+      {
+        heading: "Control Flow",
+        body: "if/else, while, do-while, and for are lowered with uniquely-numbered labels and conditional jumps. A condition expression is evaluated into a register, compared against zero with cmpq, and a je/jne branches accordingly — for example a while loop emits while_start / while_end labels and jumps back to the top each iteration. break and continue jump to the current loop's break_/continue_ labels, tracked by a loop counter so they target the right (innermost) loop.",
+      },
+      {
+        heading: "Backend & Testing",
+        body: "The compiler writes a .s file; gcc -static then assembles and links it into a runnable binary. Correctness is checked with a differential test suite: every program is compiled with both scc and gcc, both binaries are run, and their outputs are diffed — grading the compiler against a reference compiler across 30+ programs. The demo below walks through compiling, inspecting the generated assembly, and running the suite.",
       },
     ],
   },
