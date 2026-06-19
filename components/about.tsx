@@ -13,20 +13,22 @@ export function About() {
                 About
               </p>
               <h2 className="text-balance text-2xl font-semibold tracking-tight text-[#111827] sm:text-3xl">
-                Engineering across software, AI, and silicon.
+                Engineering across circuits, embedded systems, and AI.
               </h2>
               <p className="mt-5 leading-relaxed text-[#6b7280]">
-                I&apos;m a Computer Science and Electrical Engineering student at Purdue, drawn to
-                systems that sit at the intersection of software, AI, and hardware. My work spans
-                backend and systems engineering, AI-driven tools, and embedded development — from
-                custom compilers and shells to AI agents, telemetry and benchmarking pipelines, FPGA
-                designs, and analog hardware.
+                I&apos;m an Electrical Engineering and Computer Science student at Purdue with a
+                hardware-leaning focus — most at home where circuits, embedded systems, and
+                intelligent software meet. My work spans analog and digital circuit design, FPGA and
+                embedded development, and AI: optical sensor front-ends and active filters, an FPGA
+                game in SystemVerilog, gesture-controlled firmware on a microcontroller, semiconductor
+                device simulation, and research benchmarking LLMs for embedded software.
               </p>
               <p className="mt-4 leading-relaxed text-[#6b7280]">
-                Right now I&apos;m focused on applying AI to real-world engineering workflows —
-                embedded software, developer tooling, automation, and robotics-adjacent systems.
-                I&apos;m most drawn to work where strong software engineering meets hardware
-                awareness, and where AI makes complex technical systems more usable and scalable.
+                I&apos;m comfortable taking a system from schematic to bench — designing and
+                simulating circuits, bringing up microcontrollers and peripherals, and validating real
+                hardware against theory with oscilloscopes and lab instruments. Right now I&apos;m
+                focused on embedded systems and applying AI to real engineering problems, drawn to
+                rigorous work where solid electrical fundamentals meet capable software.
               </p>
             </div>
           </Reveal>
