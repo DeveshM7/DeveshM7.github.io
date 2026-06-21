@@ -29,8 +29,16 @@ export function Navbar() {
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <Link
           href="#top"
-          className="text-sm font-semibold tracking-tight text-[#f5f7fa] sm:text-base"
+          className="flex items-center gap-2.5 text-sm font-semibold tracking-tight text-[#f5f7fa] sm:text-base"
         >
+          <span className="inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-md bg-white p-0.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/purdue-logo.jpg"
+              alt="Purdue University"
+              className="h-full w-full object-contain"
+            />
+          </span>
           Devesh Maheshwari
         </Link>
 
