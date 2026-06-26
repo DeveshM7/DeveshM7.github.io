@@ -69,14 +69,15 @@ export type Experience = {
 export const experiences: Experience[] = [
   {
     company: "Palo Alto Networks",
-    role: "Platform / Software Engineering Intern",
-    date: "Jun 2026 – Aug 2026",
+    role: "Software Engineering Intern",
+    date: "May 2026 – Aug 2026",
     initials: "PAN",
     logo: "/experiences/PAN_logo.jpeg",
     bullets: [
-      "Building a usage tracker and visualizer for platform microservices and features.",
-      "Designing a plug-and-play telemetry workflow so new services can be added to the tracking pipeline with minimal manual effort.",
-      "Working on automation around service usage data, visualization, and internal developer workflows.",
+      "Building CDC pipelines (Debezium, Kafka, Flink SQL) to replicate Postgres microservices data into an analytics Aurora DB.",
+      "Enabling zero-downtime schema migrations via Goose view-aliasing, with Postgres row-level security for tenant isolation.",
+      "Deploying pipelines on Kubernetes (EKS) with Helm; a Go metrics service exports aggregates to S3 for Tableau dashboards.",
+      "Developing a Claude agent that automates metric onboarding, collapsing a multi-day, 4-branch workflow into one invocation.",
     ],
   },
   {
