@@ -627,6 +627,8 @@ export type UpcomingProject = {
   description: string
   tags: string[]
   image: string
+  /* Tailwind object-position class for the preview image; defaults to center */
+  imagePosition?: string
 }
 
 export const upcomingProjects: UpcomingProject[] = [
@@ -636,7 +638,8 @@ export const upcomingProjects: UpcomingProject[] = [
     description:
       "Building a battery-powered, wrist-worn motion controller: an on-device 1D CNN classifies hand gestures from a 6-axis IMU, streamed over BLE to control media, volume, and scrolling on a laptop — no cloud, no companion app.",
     tags: ["Embedded ML", "RP2350B", "BLE", "TensorFlow Lite Micro", "IMU"],
-    image: "/upcoming/wrist-motion-controller.svg",
+    image: "/upcoming/wrist-motion-controller.jpg",
+    imagePosition: "object-[center_75%]",
   },
   {
     title: "Internship Application Agent",

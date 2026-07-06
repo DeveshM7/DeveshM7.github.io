@@ -15,7 +15,7 @@ export function UpcomingProjects() {
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="In Progress"
-          title="Upcoming Projects"
+          title="Upcoming"
           description="Projects I'm actively building — full write-ups are coming soon."
         />
 
@@ -33,7 +33,7 @@ export function UpcomingProjects() {
                     alt={`${project.title} preview`}
                     fill
                     sizes="(max-width: 640px) 100vw, 50vw"
-                    className="object-cover"
+                    className={`object-cover ${project.imagePosition ?? "object-center"}`}
                   />
                   <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-[#7dd3fc]/40 bg-[#0b0d10]/80 px-3 py-1 font-mono text-[11px] font-medium text-[#7dd3fc] backdrop-blur-sm">
                     <Clock className="h-3 w-3" />
