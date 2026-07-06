@@ -5,16 +5,22 @@ import { ArrowLeft } from "lucide-react"
 
 /**
  * Back link for project detail pages.
- * If the user navigated here from within the site, go back so the browser
- * restores their exact previous scroll position (e.g. where they were in the
- * projects grid). Otherwise (direct visit / shared link) fall back to the
- * projects section.
+ * Uses browser back ONLY when we know the visitor navigated here from within
+ * the site (a sessionStorage flag set by the home page) — so their scroll
+ * position in the projects grid is restored. Visitors who landed directly on
+ * a project page (e.g. from LinkedIn or a shared link) are routed to the
+ * projects section instead of being bounced back off-site.
  */
 export function BackToProjects() {
   const router = useRouter()
 
   const handleClick = () => {
-    if (typeof window !== "undefined" && window.history.length > 1) {
+    const cameFromSite =
+      typeof window !== "undefined" &&
+      window.sessionStorage.getItem("visited-home") === "1" &&
+      window.history.length > 1
+
+    if (cameFromSite) {
       router.back()
     } else {
       router.push("/#projects")

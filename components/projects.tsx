@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { motion, useReducedMotion } from "motion/react"
@@ -30,6 +31,13 @@ const orderedProjects = [
 
 export function Projects() {
   const reduce = useReducedMotion()
+
+  // Mark that the visitor has been on the home page this session, so project
+  // pages' "Back to projects" can safely use browser back (restoring scroll
+  // position) instead of risking a jump back to an external referrer.
+  useEffect(() => {
+    window.sessionStorage.setItem("visited-home", "1")
+  }, [])
 
   return (
     <section id="projects" className="bg-[#e6eaf0] px-4 pt-24 pb-16 sm:px-6">

@@ -31,6 +31,7 @@ export function HeroBackground() {
     let particles: Particle[] = []
     let glyphs: Glyph[] = []
     let raf = 0
+    let visible = true
 
     const init = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -72,6 +73,7 @@ export function HeroBackground() {
     }
 
     const render = () => {
+      if (!visible) return
       ctx.clearRect(0, 0, width, height)
 
       // glyphs (behind the network)
@@ -122,26 +124,43 @@ export function HeroBackground() {
       raf = requestAnimationFrame(render)
     }
 
-    init()
-    if (prefersReduced) {
-      drawStatic()
-    } else {
-      raf = requestAnimationFrame(render)
-    }
-
-    const handleResize = () => {
+    const startLoop = () => {
       cancelAnimationFrame(raf)
-      init()
       if (prefersReduced) {
         drawStatic()
-      } else {
+      } else if (visible) {
         raf = requestAnimationFrame(render)
       }
     }
 
+    init()
+    startLoop()
+
+    const handleResize = () => {
+      cancelAnimationFrame(raf)
+      init()
+      startLoop()
+    }
+
+    // Pause the animation loop whenever the hero is scrolled out of view —
+    // otherwise it burns CPU/battery for the entire visit.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting
+        if (visible) {
+          startLoop()
+        } else {
+          cancelAnimationFrame(raf)
+        }
+      },
+      { threshold: 0 },
+    )
+    observer.observe(canvas)
+
     window.addEventListener("resize", handleResize)
     return () => {
       cancelAnimationFrame(raf)
+      observer.disconnect()
       window.removeEventListener("resize", handleResize)
     }
   }, [])

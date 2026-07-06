@@ -21,7 +21,11 @@ export function Carousel({ images }: { images: CarouselImage[] }) {
   const next = useCallback(() => go(index + 1), [go, index])
   const prev = useCallback(() => go(index - 1), [go, index])
 
+  // Keyboard navigation is only active while the fullscreen zoom is open —
+  // a page can host several carousels, and a global listener would advance
+  // all of them at once (and hijack arrow-key page scrolling).
   useEffect(() => {
+    if (!zoom) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "ArrowRight") next()
       else if (e.key === "ArrowLeft") prev()
@@ -29,7 +33,7 @@ export function Carousel({ images }: { images: CarouselImage[] }) {
     }
     window.addEventListener("keydown", onKey)
     return () => window.removeEventListener("keydown", onKey)
-  }, [next, prev])
+  }, [zoom, next, prev])
 
   useEffect(() => {
     document.body.style.overflow = zoom ? "hidden" : ""
