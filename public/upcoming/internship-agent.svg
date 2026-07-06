@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="ui-sans-serif, system-ui, sans-serif">
+  <defs>
+    <linearGradient id="ia_bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#11161d"/>
+      <stop offset="100%" stop-color="#0b0d10"/>
+    </linearGradient>
+    <marker id="ia_ah" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7dd3fc"/>
+    </marker>
+    <marker id="ia_ahm" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#6b7686"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#ia_bg)"/>
+
+  <text x="800" y="110" text-anchor="middle" font-size="24" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">job posting &#8594; truthful, tailored r&#233;sum&#233;</text>
+
+  <!-- Job posting -->
+  <rect x="80" y="360" width="280" height="220" rx="16" fill="#161d26" stroke="#3a4554" stroke-width="2"/>
+  <path d="M140 410 h160 M140 440 h160 M140 470 h110" stroke="#6b7686" stroke-width="4" stroke-linecap="round"/>
+  <text x="220" y="530" text-anchor="middle" font-size="24" fill="#f5f7fa">Job Posting</text>
+
+  <line x1="360" y1="470" x2="426" y2="470" stroke="#7dd3fc" stroke-width="3" marker-end="url(#ia_ah)"/>
+
+  <!-- Agent -->
+  <rect x="430" y="330" width="400" height="280" rx="16" fill="#1a2330" stroke="#7dd3fc" stroke-width="2"/>
+  <path d="M540 400 l14 34 34 14 -34 14 -14 34 -14 -34 -34 -14 34 -14 Z" fill="#7dd3fc"/>
+  <text x="670" y="410" text-anchor="middle" font-size="26" fill="#f5f7fa">Claude Agent</text>
+  <text x="670" y="446" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">tool-use loop</text>
+  <line x1="470" y1="480" x2="800" y2="480" stroke="#3a4554" stroke-width="2"/>
+  <text x="670" y="520" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">grounded in the</text>
+  <text x="670" y="550" text-anchor="middle" font-size="19" fill="#7dd3fc" font-family="ui-monospace, Menlo, monospace">experience bank (YAML)</text>
+  <text x="670" y="586" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">every bullet traces to a source id</text>
+
+  <line x1="840" y1="470" x2="906" y2="470" stroke="#7dd3fc" stroke-width="3" marker-end="url(#ia_ah)"/>
+
+  <!-- Resume PDF -->
+  <rect x="910" y="330" width="300" height="280" rx="16" fill="#16241c" stroke="#5ad19a" stroke-width="2"/>
+  <rect x="950" y="366" width="220" height="150" rx="8" fill="#f6f8fb"/>
+  <path d="M970 396 h140 M970 418 h180" stroke="#0b0d10" stroke-opacity="0.5" stroke-width="0" />
+  <path d="M970 396 h140" stroke="#0b0d10" stroke-width="6" stroke-linecap="round" opacity="0.7"/>
+  <path d="M970 420 h150" stroke="#0b0d10" stroke-width="5" stroke-linecap="round" opacity="0.4"/>
+  <path d="M970 442 h150" stroke="#7dd3fc" stroke-width="5" stroke-linecap="round"/>
+  <path d="M970 464 h120" stroke="#0b0d10" stroke-width="5" stroke-linecap="round" opacity="0.4"/>
+  <path d="M970 486 h150" stroke="#0b0d10" stroke-width="5" stroke-linecap="round" opacity="0.4"/>
+  <text x="1060" y="556" text-anchor="middle" font-size="21" fill="#f5f7fa">One-Page R&#233;sum&#233;</text>
+  <text x="1060" y="586" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">LaTeX &#8594; PDF</text>
+
+  <!-- verified badge -->
+  <circle cx="1178" cy="356" r="26" fill="#0d1014" stroke="#5ad19a" stroke-width="3"/>
+  <path d="M1166 356 l9 9 17 -19" fill="none" stroke="#5ad19a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- branch down to tracker / status engine -->
+  <line x1="630" y1="610" x2="630" y2="700" stroke="#6b7686" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#ia_ahm)"/>
+  <rect x="440" y="704" width="380" height="120" rx="14" fill="#161d26" stroke="#3a4554" stroke-width="2"/>
+  <text x="630" y="750" text-anchor="middle" font-size="21" fill="#f5f7fa">Application Tracker</text>
+  <text x="630" y="782" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">Postgres + pgvector</text>
+
+  <line x1="1030" y1="610" x2="1030" y2="700" stroke="#6b7686" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#ia_ahm)"/>
+  <rect x="840" y="704" width="380" height="120" rx="14" fill="#161d26" stroke="#3a4554" stroke-width="2"/>
+  <text x="1030" y="750" text-anchor="middle" font-size="21" fill="#f5f7fa">Status Engine</text>
+  <text x="1030" y="782" text-anchor="middle" font-size="15" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">Gmail &#8594; Calendar sync</text>
+
+  <text x="800" y="920" text-anchor="middle" font-size="17" fill="#9aa4b2" font-family="ui-monospace, Menlo, monospace">every claim traces to a real, structured source &#8212; nothing fabricated</text>
+</svg>

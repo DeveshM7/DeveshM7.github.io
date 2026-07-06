@@ -36,6 +36,7 @@ export const navLinks = [
   { label: "About", href: "#about" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Upcoming", href: "#upcoming" },
   { label: "Research", href: "#research" },
   { label: "Contact", href: "#contact" },
 ]
@@ -616,6 +617,36 @@ export const projects: Project[] = [
 export function getProject(slug: string): Project | undefined {
   return projects.find((p) => p.slug === slug)
 }
+
+/* ------------------------------------------------------------------ */
+/*  UPCOMING PROJECTS — in progress, no dedicated page yet             */
+/* ------------------------------------------------------------------ */
+export type UpcomingProject = {
+  title: string
+  status: string
+  description: string
+  tags: string[]
+  image: string
+}
+
+export const upcomingProjects: UpcomingProject[] = [
+  {
+    title: "Wireless Wrist-Worn Motion Controller",
+    status: "Actively building",
+    description:
+      "Building a battery-powered, wrist-worn motion controller: an on-device 1D CNN classifies hand gestures from a 6-axis IMU, streamed over BLE to control media, volume, and scrolling on a laptop — no cloud, no companion app.",
+    tags: ["Embedded ML", "RP2350B", "BLE", "TensorFlow Lite Micro", "IMU"],
+    image: "/upcoming/wrist-motion-controller.svg",
+  },
+  {
+    title: "Internship Application Agent",
+    status: "Actively building",
+    description:
+      "An LLM-powered agent that tailors a truthful, one-page résumé to any job posting through a compile-time LaTeX measurement loop, tracks every application, and keeps status synced by reading recruiting email.",
+    tags: ["Claude API", "Python", "FastAPI", "Next.js", "Postgres/pgvector"],
+    image: "/upcoming/internship-agent.svg",
+  },
+]
 
 /* ------------------------------------------------------------------ */
 /*  RESEARCH                                                           */
