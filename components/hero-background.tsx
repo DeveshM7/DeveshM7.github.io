@@ -32,6 +32,9 @@ export function HeroBackground() {
     let glyphs: Glyph[] = []
     let raf = 0
     let visible = true
+    let pointerX = 0
+    let pointerY = 0
+    let pointerActive = false
 
     const init = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -87,8 +90,33 @@ export function HeroBackground() {
         ctx.fillText(g.char, g.x, g.y)
       }
 
+      // cursor position in canvas space (NaN when the pointer is elsewhere)
+      let mx = Number.NaN
+      let my = Number.NaN
+      if (pointerActive) {
+        const rect = canvas.getBoundingClientRect()
+        mx = pointerX - rect.left
+        my = pointerY - rect.top
+        if (mx < 0 || mx > width || my < 0 || my > height) {
+          mx = Number.NaN
+          my = Number.NaN
+        }
+      }
+
       // particles
       for (const p of particles) {
+        // gentle repulsion away from the cursor
+        if (!Number.isNaN(mx)) {
+          const dxm = p.x - mx
+          const dym = p.y - my
+          const dm = Math.hypot(dxm, dym)
+          if (dm > 0.001 && dm < 90) {
+            const push = ((90 - dm) / 90) * 0.35
+            p.x += (dxm / dm) * push
+            p.y += (dym / dm) * push
+          }
+        }
+
         p.x += p.vx
         p.y += p.vy
         if (p.x < 0 || p.x > width) p.vx *= -1
@@ -98,6 +126,23 @@ export function HeroBackground() {
         ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2)
         ctx.fillStyle = "rgba(174,182,194,0.65)"
         ctx.fill()
+      }
+
+      // lines from the cursor to nearby particles — the cursor joins the constellation
+      if (!Number.isNaN(mx)) {
+        const reach = 170
+        for (const p of particles) {
+          const dist = Math.hypot(p.x - mx, p.y - my)
+          if (dist < reach) {
+            const opacity = (1 - dist / reach) * 0.45
+            ctx.beginPath()
+            ctx.moveTo(mx, my)
+            ctx.lineTo(p.x, p.y)
+            ctx.strokeStyle = `rgba(125,211,252,${opacity})`
+            ctx.lineWidth = 1
+            ctx.stroke()
+          }
+        }
       }
 
       // connecting lines
@@ -157,11 +202,33 @@ export function HeroBackground() {
     )
     observer.observe(canvas)
 
+    // Track the mouse so the cursor can join the constellation (mouse only —
+    // touch input skips this entirely).
+    const handlePointerMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return
+      pointerX = e.clientX
+      pointerY = e.clientY
+      pointerActive = true
+    }
+    const handlePointerGone = () => {
+      pointerActive = false
+    }
+
     window.addEventListener("resize", handleResize)
+    if (!prefersReduced) {
+      window.addEventListener("pointermove", handlePointerMove, { passive: true })
+      window.addEventListener("pointerdown", handlePointerMove, { passive: true })
+      document.addEventListener("pointerleave", handlePointerGone)
+      window.addEventListener("blur", handlePointerGone)
+    }
     return () => {
       cancelAnimationFrame(raf)
       observer.disconnect()
       window.removeEventListener("resize", handleResize)
+      window.removeEventListener("pointermove", handlePointerMove)
+      window.removeEventListener("pointerdown", handlePointerMove)
+      document.removeEventListener("pointerleave", handlePointerGone)
+      window.removeEventListener("blur", handlePointerGone)
     }
   }, [])
 

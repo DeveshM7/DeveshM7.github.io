@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from "motion/react"
 import { ArrowUpRight } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/reveal"
+import { Tilt } from "@/components/tilt"
 import { projects } from "@/lib/data"
 
 // Display order of the project tiles (left→right, top→bottom).
@@ -40,7 +41,7 @@ export function Projects() {
   }, [])
 
   return (
-    <section id="projects" className="bg-[#e6eaf0] px-4 pt-24 pb-16 sm:px-6">
+    <section id="projects" className="bg-[#e6eaf0] px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Selected Work"
@@ -50,14 +51,14 @@ export function Projects() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {orderedProjects.map((project, i) => (
-            <Reveal as="article" key={project.slug} delay={(i % 3) * 0.08}>
-              <motion.div
-                whileHover={reduce ? undefined : { y: -6 }}
-                transition={{ type: "spring", stiffness: 280, damping: 22 }}
-                className="group h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
-              >
+            <Reveal as="article" key={project.slug} delay={(i % 3) * 0.08} className="h-full">
+              <Tilt className="h-full">
+                <motion.div
+                  whileHover={reduce ? undefined : { y: -6 }}
+                  transition={{ type: "spring", stiffness: 280, damping: 22 }}
+                  className="group h-full overflow-hidden rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] shadow-sm transition-shadow duration-300 hover:shadow-xl"
+                >
                 <Link href={`/projects/${project.slug}`} className="block">
-                  {/* Project image — TODO: replace images in /public/projects */}
                   <div className="relative aspect-[16/10] overflow-hidden bg-[#0b0d10]">
                     <Image
                       src={project.image || "/placeholder.svg"}
@@ -94,7 +95,8 @@ export function Projects() {
                     </ul>
                   </div>
                 </Link>
-              </motion.div>
+                </motion.div>
+              </Tilt>
             </Reveal>
           ))}
         </div>

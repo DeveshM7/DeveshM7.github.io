@@ -1,25 +1,26 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Reveal } from "@/components/reveal"
+import { CountUp } from "@/components/count-up"
 import { research } from "@/lib/data"
 import { GithubIcon } from "@/components/brand-icons"
 import { FileText, ArrowRight } from "lucide-react"
 
 export function Research() {
   return (
-    <section id="research" className="bg-[#e6eaf0] px-4 pt-16 pb-24 sm:px-6">
+    <section id="research" className="bg-[#0b0d10] px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#0b0d10]/50">
+          <p className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#7dd3fc]">
             Academia
           </p>
-          <h2 className="mb-10 text-balance text-3xl font-semibold tracking-tight text-[#111827] sm:text-4xl">
+          <h2 className="mb-10 text-balance text-3xl font-semibold tracking-tight text-[#f5f7fa] sm:text-4xl">
             Research
           </h2>
         </Reveal>
 
         <Reveal delay={0.1}>
-          <div className="relative overflow-hidden rounded-3xl border border-[#e5e7eb] bg-[#0b0d10] shadow-md">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#10151c]">
             {/* subtle grid + accent glow */}
             <div aria-hidden="true" className="grid-bg absolute inset-0 opacity-50" />
             <div
@@ -75,7 +76,9 @@ export function Research() {
                       key={stat.label}
                       className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-3 text-center"
                     >
-                      <div className="text-xl font-semibold text-[#7dd3fc]">{stat.value}</div>
+                      <div className="text-xl font-semibold text-[#7dd3fc]">
+                        <CountUp value={stat.value} />
+                      </div>
                       <div className="mt-1 text-[11px] leading-tight text-[#aeb6c2]/80">
                         {stat.label}
                       </div>

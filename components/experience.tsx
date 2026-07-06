@@ -1,8 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import Image from "next/image"
-import { AnimatePresence, motion, useReducedMotion } from "motion/react"
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "motion/react"
 import { ChevronDown } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
 import { Reveal } from "@/components/reveal"
@@ -12,16 +18,29 @@ export function Experience() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
   const reduce = useReducedMotion()
 
+  // The accent timeline draws itself in as the list scrolls through view.
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 0.85", "end 0.5"],
+  })
+  const lineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 25 })
+
   return (
     <section id="experience" className="bg-[#0b0d10] px-4 py-24 sm:px-6">
       <div className="mx-auto max-w-4xl">
         <SectionHeading eyebrow="Career" title="Experience" dark />
 
-        <div className="relative">
-          {/* vertical timeline line */}
+        <div className="relative" ref={timelineRef}>
+          {/* vertical timeline: faint track + accent line that draws on scroll */}
           <div
             aria-hidden="true"
             className="absolute bottom-0 left-[27px] top-2 w-px bg-white/10 sm:left-[31px]"
+          />
+          <motion.div
+            aria-hidden="true"
+            style={{ scaleY: reduce ? 1 : lineScale }}
+            className="absolute bottom-0 left-[27px] top-2 w-px origin-top bg-gradient-to-b from-[#7dd3fc]/70 via-[#7dd3fc]/40 to-transparent sm:left-[31px]"
           />
 
           <ul className="flex flex-col gap-4">

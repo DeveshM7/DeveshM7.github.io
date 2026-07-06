@@ -34,7 +34,10 @@ export function Hero() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="relative mb-8"
         >
-          <div className="absolute -inset-2 rounded-full bg-[#7dd3fc]/10 blur-xl" aria-hidden="true" />
+          <div
+            className="absolute -inset-2 rounded-full bg-[#7dd3fc]/10 blur-xl [animation:halo-pulse_6s_ease-in-out_infinite]"
+            aria-hidden="true"
+          />
           <div className="relative h-32 w-32 overflow-hidden rounded-full border border-white/15 shadow-2xl sm:h-36 sm:w-36">
             <Image
               src="/display_pic.jpeg"

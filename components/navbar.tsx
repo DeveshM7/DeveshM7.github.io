@@ -9,12 +9,32 @@ import { cn } from "@/lib/utils"
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState("")
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  // Scrollspy: highlight the nav link of whichever section is crossing the
+  // middle band of the viewport.
+  useEffect(() => {
+    const sections = navLinks
+      .map((link) => document.getElementById(link.href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`)
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    )
+    sections.forEach((section) => observer.observe(section))
+    return () => observer.disconnect()
   }, [])
 
   return (
@@ -48,12 +68,14 @@ export function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-md px-3 py-2 text-sm text-[#aeb6c2] transition-colors hover:text-[#f5f7fa]"
+              className={cn(
+                "relative rounded-md px-3 py-2 text-sm transition-colors after:absolute after:inset-x-3 after:-bottom-px after:h-px after:origin-left after:scale-x-0 after:bg-[#7dd3fc] after:transition-transform after:duration-300 hover:text-[#f5f7fa] hover:after:scale-x-100",
+                active === link.href ? "text-[#f5f7fa] after:scale-x-100" : "text-[#aeb6c2]",
+              )}
             >
               {link.label}
             </Link>
           ))}
-          {/* TODO: replace resume link in lib/data.ts */}
           <a
             href={contactLinks.resume}
             target="_blank"

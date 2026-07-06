@@ -129,7 +129,6 @@ export type Project = {
   category: string
   description: string
   tags: string[]
-  /* TODO: replace with your real project image paths */
   image: string
   /* Optional rich detail-page content */
   github?: string
