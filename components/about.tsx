@@ -1,5 +1,13 @@
+import { Award, Cpu, GraduationCap, MapPin, type LucideIcon } from "lucide-react"
 import { Reveal } from "@/components/reveal"
 import { quickFacts } from "@/lib/data"
+
+const factIcons: Record<string, LucideIcon> = {
+  University: GraduationCap,
+  Major: Cpu,
+  GPA: Award,
+  "Based in": MapPin,
+}
 
 export function About() {
   return (
@@ -34,18 +42,33 @@ export function About() {
           </Reveal>
 
           {/* Quick facts */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {quickFacts.map((fact, i) => (
-              <Reveal key={fact.label} delay={i * 0.06}>
-                <div className="h-full rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#7dd3fc]/50 hover:shadow-md">
-                  <p className="font-mono text-xs uppercase tracking-[0.15em] text-[#0b0d10]/40">
-                    {fact.label}
-                  </p>
-                  <p className="mt-2 text-lg font-medium text-[#111827]">{fact.value}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+          <Reveal delay={0.1}>
+            <div className="flex h-full flex-col justify-between rounded-2xl border border-[#e5e7eb] bg-[#f1f4f8] p-8 shadow-sm">
+              {quickFacts.map((fact, i) => {
+                const Icon = factIcons[fact.label]
+                return (
+                  <div
+                    key={fact.label}
+                    className={`flex items-center gap-4 ${
+                      i !== 0 ? "border-t border-[#e5e7eb] pt-6" : ""
+                    }`}
+                  >
+                    {Icon && (
+                      <span className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-[#e5e7eb] bg-white text-[#7dd3fc]">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                    )}
+                    <div>
+                      <p className="font-mono text-xs uppercase tracking-[0.15em] text-[#0b0d10]/40">
+                        {fact.label}
+                      </p>
+                      <p className="mt-1 text-lg font-medium text-[#111827]">{fact.value}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>
