@@ -18,7 +18,7 @@ export const socialLinks: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/DeveshM7", icon: GithubIcon },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/devesh-maheshwari", icon: LinkedinIcon },
   { label: "Email", href: "mailto:deveshm95764@gmail.com", icon: Mail },
-  { label: "Resume", href: "/resume.pdf", icon: FileText },
+  { label: "Resume", href: "/resume-full.pdf", icon: FileText },
 ]
 
 /* Convenience direct references used in the contact section */
@@ -26,7 +26,7 @@ export const contactLinks = {
   email: "mailto:deveshm95764@gmail.com",
   linkedin: "https://www.linkedin.com/in/devesh-maheshwari",
   github: "https://github.com/DeveshM7",
-  resume: "/resume.pdf",
+  resume: "/resume-full.pdf",
 }
 
 /* ------------------------------------------------------------------ */
